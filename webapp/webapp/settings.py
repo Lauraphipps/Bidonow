@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'workflows.apps.WorkflowsConfig',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
     pass
