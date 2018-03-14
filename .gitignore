@@ -1,0 +1,10 @@
+*.pyc
+
+# IDE settings
+.exrc/
+
+# secret keys (ex.: passwords, secret keys, etc.)
+secretkeys.json
+
+*.sqlite3
+volumes/
