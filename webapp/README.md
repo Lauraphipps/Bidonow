@@ -15,3 +15,10 @@ wget 127.0.0.1:9090
 # run webapp
 docker run -d --mount type=bind,src=/app/volumes/webapp/,dst=/tmp/ --link webapp-db:webapp-db --name webapp webapp
 ```
+
+## CREATE DB
+
+```
+CREATE ROLE bidonow WITH LOGIN PASSWORD 'xxxxxxxx';
+CREATE DATABASE bidonow;
+GRANT ALL PRIVILEGES ON DATABASE bidonow TO bidonow;
