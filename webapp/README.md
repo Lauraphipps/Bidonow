@@ -37,6 +37,9 @@ sudo service apache2 restart
 
 ## Static files
 
+TODO Read: https://medium.com/a-beginners-guide-for-webpack-2
+TODO Example of webpack.config.js: https://github.com/Dogfalo/materialize/issues/4521
+
 ### Intall tools
 
 1. yarn
