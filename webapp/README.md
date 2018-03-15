@@ -22,6 +22,7 @@ docker run -d --mount type=bind,src=/app/volumes/webapp/,dst=/var/webapp --link 
 docker stop webapp
 docker container rm webapp
 docker rmi webapp:prev
+docker container rm webapp-admin
 docker tag webapp:latest webapp:prev
 docker build -t webapp:latest .
 docker run -it --link webapp-db:webapp-db --mount type=bind,src=/app/volumes/webapp/,dst=/var/webapp --name webapp-admin webapp:latest bash
@@ -30,7 +31,6 @@ docker run -it --link webapp-db:webapp-db --mount type=bind,src=/app/volumes/web
     # TODO check if we can use webpack to copy static files
     python manage.py collectstatic --clear --no-input
     exit
-docker container rm webapp-admin
 docker run -d --mount type=bind,src=/app/volumes/webapp/,dst=/var/webapp --link webapp-db:webapp-db --name webapp webapp:latest
 sudo service apache2 restart
 ```
