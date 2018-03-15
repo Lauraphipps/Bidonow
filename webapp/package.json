@@ -1,0 +1,19 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "Bidonow webapp",
+  "main": "main.js",
+  "author": "Vadim Ovcearenco",
+  "license": "MIT",
+  "dependencies": {
+    "materialize-css": "^0.100.2",
+    "vue": "^2.5.16",
+    "webpack": "^4.1.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^2.0.12"
+  },
+  "scripts": {
+    "build": "webpack"
+  }
+}

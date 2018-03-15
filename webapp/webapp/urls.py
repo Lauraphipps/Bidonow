@@ -18,7 +18,10 @@ from django.urls import path, include
 
 from django.conf import settings
 
+from . import views
+
 urlpatterns = [
+    path('', views.home),
     path('admin/', admin.site.urls),
     path(r'nested_admin/', include('nested_admin.urls')),
 ]
@@ -26,6 +29,4 @@ urlpatterns = [
 
 if settings.INSTANCE_TYPE == 'dev':
     from django.conf.urls.static import static
-    urlpatterns = [
-        # ... the rest of your URLconf goes here ...
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

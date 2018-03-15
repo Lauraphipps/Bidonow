@@ -10,3 +10,9 @@ local_settings.py
 
 *.sqlite3
 volumes/
+
+webapp/.sass-cache/
+webapp/node_modules/
+webapp/static/dist
+webapp/yarn-error.log
+webapp/yarn.lock

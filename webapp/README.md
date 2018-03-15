@@ -27,11 +27,40 @@ docker build -t webapp:latest .
 docker run -it --link webapp-db:webapp-db --mount type=bind,src=/app/volumes/webapp/,dst=/var/webapp --name webapp-admin webapp:latest bash
     # inside docker
     python manage.py migrate
+    # TODO check if we can use webpack to copy static files
     python manage.py collectstatic --clear --no-input
     exit
 docker container rm webapp-admin
 docker run -d --mount type=bind,src=/app/volumes/webapp/,dst=/var/webapp --link webapp-db:webapp-db --name webapp webapp:latest
 sudo service apache2 restart
+```
+
+## Static files
+
+### Intall tools
+
+1. yarn
+2. sass - version 3.5.5 # TODO find way how to use webpack to build sass files
+
+#### Install packages
+
+```
+yarn install
+```
+
+#### Build
+
+```
+npm run build
+```
+
+
+#### Compile sass
+
+TODO Find way how to use webpack to build sass
+
+```
+sass .\static\sass\main.scss .\static\dist\main.css
 ```
 
 ## CREATE DB
