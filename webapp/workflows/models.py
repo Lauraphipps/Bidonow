@@ -23,6 +23,9 @@ class Question(models.Model):
     text = models.CharField(max_length=1000, blank=False, null=False)
     workflow = models.ForeignKey(Workflow, blank=False, null=False, on_delete=models.CASCADE)
     order = models.IntegerField(blank=True, null=True)
+    
+    class Meta:
+        ordering = ['order', 'id']
 
     def __str__(self):
         return self.text
@@ -33,6 +36,9 @@ class Answer(models.Model):
     text = models.CharField(max_length=1000, blank=False, null=False)
     next_question = models.ForeignKey(Question, blank=True, null=True, on_delete=models.PROTECT, related_name='next_questions')
     order = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['order', 'id']
 
     def __str__(self):
         return self.text
