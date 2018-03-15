@@ -1,5 +1,7 @@
 FROM python:3.6-stretch
 
+ENV INSTANCE_TYPE=prod
+
 RUN pip install uwsgi
 
 ADD . /app

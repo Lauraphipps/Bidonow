@@ -1,0 +1,16 @@
+import os
+from . import common
+
+print('Load settings.local_settings')
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'bidonow',
+        'NAME': 'bidonow',
+        'PASSWORD': 'xxxxxx',
+    }
+}
+
+MEDIA_ROOT = os.path.join(os.path.dirname(common.BASE_DIR), 'volumes', 'webapp', 'media')
