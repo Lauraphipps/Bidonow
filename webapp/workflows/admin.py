@@ -5,6 +5,7 @@ from . import models
 
 
 admin.site.register(models.QuestionType)
+admin.site.register(models.AnswerType)
 
 
 class FormSetWithParent(forms.BaseInlineFormSet):
@@ -33,7 +34,7 @@ class AnswerInline(nested_admin.NestedTabularInline):
     model = models.Answer
     fk_name = 'question'
     ordering = ['order', 'id']
-    extra = 1
+    extra = 0
     form = AnswerForm
     formset = FormSetWithParent
 
@@ -49,7 +50,7 @@ class QuestionInline(nested_admin.NestedTabularInline):
     inlines = [
         AnswerInline
     ]
-    extra = 1
+    extra = 0
 
 
 
