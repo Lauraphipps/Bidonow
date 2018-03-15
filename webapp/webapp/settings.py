@@ -27,7 +27,7 @@ DEBUG = True
 
 USE_X_FORWARDED_HOST = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '73.179.34.39', 'stage.bitonow.me']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '73.179.34.39', 'stage.bitonow.me', '10.0.0.180']
 
 
 # Application definition
@@ -123,6 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "/var/webapp/static/"
 
 try:
     from .local_settings import *
