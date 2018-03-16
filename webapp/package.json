@@ -6,11 +6,11 @@
   "author": "Vadim Ovcearenco",
   "license": "MIT",
   "dependencies": {
-    "materialize-css": "^0.100.2",
-    "vue": "^2.5.16",
-    "webpack": "^4.1.1"
   },
   "devDependencies": {
+    "materialize-css": "^0.100.2",
+    "vue": "^2.5.16",
+    "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12"
   },
   "scripts": {
