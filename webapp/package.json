@@ -5,10 +5,16 @@
   "main": "main.js",
   "author": "Vadim Ovcearenco",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "css-loader": "^0.28.10",
+    "file-loader": "^1.1.11",
     "materialize-css": "^0.100.2",
+    "mini-css-extract-plugin": "^0.2.0",
+    "node-sass": "^4.7.2",
+    "resolve-url-loader": "^2.3.0",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
     "vue": "^2.5.16",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12"
