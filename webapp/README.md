@@ -27,6 +27,8 @@ docker tag webapp:latest webapp:prev
 docker build -t webapp:latest .
 docker run -it --link webapp-db:webapp-db --mount type=bind,src=/app/volumes/webapp/,dst=/var/webapp --name webapp-admin webapp:latest bash
     # inside docker
+    yarn install
+    yarn build
     python manage.py migrate
     # TODO check if we can use webpack to copy static files
     python manage.py collectstatic --clear --no-input

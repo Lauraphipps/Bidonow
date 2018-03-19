@@ -10,7 +10,10 @@ def home(request):
 
 
 def make_bid(request, bid_id):
-    return render(request, 'make-bid.html')
+    data = {
+        'workflow_id': bid_id
+    }
+    return render(request, 'make-bid.html', data)
 
 
 def _format_answer(a):
@@ -33,6 +36,7 @@ def _format_question(q):
 def api_get_bid(request, bid_id):
     workflow = Workflow.objects.get(id=bid_id)
     workflow_data = {
+        'id': workflow.id,
         'name': workflow.name,
         'questions': [_format_question(q) for q in workflow.question_set.all()]
     }

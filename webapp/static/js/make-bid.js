@@ -91,7 +91,7 @@ var app = new Vue({
 
     },
     created: function () {
-        this.$http.get('/api/workflows/1').then((response) => {
+        this.$http.get('/api/workflows/' + WORKFLOW_ID).then((response) => {
             this.workflow = response.data.workflow;
             this.cq_idx = 0;
             this.cq = this.workflow.questions[this.cq_idx];
