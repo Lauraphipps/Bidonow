@@ -22,8 +22,9 @@ docker run -d --mount type=bind,src=/app/volumes/webapp/,dst=/var/webapp --link 
 docker stop webapp
 docker container rm webapp
 docker rmi webapp:prev
-docker container rm webapp-admin
 docker tag webapp:latest webapp:prev
+docker container rm webapp-admin
+docker rmi webapp:latest
 docker build -t webapp:latest .
 docker run -it --link webapp-db:webapp-db --mount type=bind,src=/app/volumes/webapp/,dst=/var/webapp --name webapp-admin webapp:latest bash
     # inside docker

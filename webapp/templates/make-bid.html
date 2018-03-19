@@ -39,6 +39,7 @@
                                         v-for="answer in this.cq.answers"
                                         v-bind:answer="answer"
                                         v-bind:question="cq"
+                                        v-bind:key="answer.id"
                                         >
                                     </answer>
                                 </ul>
