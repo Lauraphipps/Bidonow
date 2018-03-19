@@ -22,6 +22,6 @@
   },
   "scripts": {
     "watch": "webpack --watch --progress --colors --mode=development",
-    "build": "webpack"
+    "build": "webpack --mode=development"
   }
 }
