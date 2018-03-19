@@ -3,7 +3,10 @@ const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: path.resolve(__dirname, 'static', 'js', 'main.js'),
+    entry: {
+        main: path.resolve(__dirname, 'static', 'js', 'main.js'),
+        "make-bid": path.resolve(__dirname, 'static', 'js', 'make-bid.js')
+    },
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'static', 'dist')

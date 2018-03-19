@@ -22,6 +22,8 @@ from . import views
 
 urlpatterns = [
     path('', views.home),
+    path('make-bid/<int:bid_id>/', views.make_bid),
+    path('api/workflows/<int:bid_id>', views.api_get_bid),
     path('admin/', admin.site.urls),
     path(r'nested_admin/', include('nested_admin.urls')),
 ]

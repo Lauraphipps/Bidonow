@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="{% static "main.css" %}"  media="screen,projection"/>
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+        <h1>Make bid</h1>
+        {% verbatim %}
+        <div id="app">
+
+              <div v-if="!this.workflow">
+                  Workflow is loading
+              </div>
+              <div v-if="this.workflow">
+                  <div class="row">
+                    <div class="col s12 m6">
+                        <h2>{{ this.workflow.name }}<h2>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12 m6">
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title">{{ this.cq.text }}</span>
+                                <ul>
+                                    <answer 
+                                        v-for="answer in this.cq.answers"
+                                        v-bind:answer="answer"
+                                        v-bind:question="cq"
+                                        >
+                                    </answer>
+                                </ul>
+                            </div>
+                            <div class="card-action">
+                                <a href="#" v-show="hasPrev" @click="goBack">Back</a>
+                                <a href="#" v-show="hasNext" @click="goNext">Next</a>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+        </div>
+        {% endverbatim %}
+        <script type="text/javascript" src="{% static "make-bid.js" %}"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    </body>
+</html>

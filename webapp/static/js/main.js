@@ -2,8 +2,6 @@ import _ from 'lodash';
 // import '../sass/main.scss'
 import Vue from 'vue';
 
-alert('main.js loaded 45');
-
 function component() {
   var element = document.createElement('div');
 
