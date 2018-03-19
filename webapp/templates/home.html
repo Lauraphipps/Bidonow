@@ -14,9 +14,15 @@
 
     <body>
         <h1>Bidonow homepage</h1>
-        <!--Import jQuery before materialize.js-->
-        <script type="text/javascript" src="{% static "bundle.js" %}"></script>
+        {% verbatim %}
+        <div id="app">
+              <p>{{ message }}</p>
+              <button v-on:click="reverseMessage" class="btn">Reverse Message</button>
+        </div>
+        {% endverbatim %}
+        <script type="text/javascript" src="{% static "main.js" %}"></script>
+        <!-- <script type="text/javascript" src="{% static "test.js" %}"></script> -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <!-- <script type="text/javascript" src="js/materialize.min.js"></script> -->
     </body>
 </html>

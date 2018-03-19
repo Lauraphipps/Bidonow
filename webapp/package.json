@@ -20,6 +20,7 @@
     "webpack-cli": "^2.0.12"
   },
   "scripts": {
+    "watch":  "webpack --watch --progress --colors --mode=development",
     "build": "webpack"
   }
 }
