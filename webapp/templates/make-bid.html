@@ -44,6 +44,7 @@
                                         <label :for="'answer_' + answer.id">{{ answer.text }} (id: {{answer.id }})</label>
                                         <div v-if="showMoreData(answer)">
                                             <input type="text" v-if="answer.type=='text'" v-model="answer.more_data" :placeholder="'Enter: ' + answer.text" />
+                                            <input type="number" v-if="answer.type=='number'" v-model="answer.more_data" :placeholder="'Enter: ' + answer.text" />
                                             <div v-if="answer.type=='image'">
                                                 <picture-input
                                                     ref="pictureInput"
