@@ -34,6 +34,10 @@ module.exports = {
                 options: {
                     name: "fonts/[name].[ext]",
                 }
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
         ]
     },

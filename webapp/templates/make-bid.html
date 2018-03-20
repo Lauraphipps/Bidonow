@@ -19,7 +19,6 @@
         <h1 class="vadim">Make bid</h1>
         {% verbatim %}
         <div id="app">
-
               <div v-if="!this.workflow">
                   Workflow is loading
               </div>
@@ -35,13 +34,31 @@
                             <div class="card-content">
                                 <span class="card-title">{{ this.cq.text }}</span>
                                 <ul>
-                                    <answer 
-                                        v-for="answer in this.cq.answers"
-                                        v-bind:answer="answer"
-                                        v-bind:question="cq"
-                                        v-bind:key="answer.id"
-                                        >
-                                    </answer>
+                                    <li v-if="cq.type=='zip'">
+                                        <input type="text" :id="'question_' + cq.id" placeholder="Enter Zip code">
+                                        <label :for="'question_' + cq.id">Enter Zip Code</label>
+                                    </li>
+                                    <li v-else v-for="answer in this.cq.answers">
+                                        <input v-if="cq.type=='one'"type="radio" :value="answer.id" :name="'question_' + cq.id" v-model=cq.selected :id="'answer_' + answer.id"/>
+                                        <input v-if="cq.type=='multi'"type="checkbox" v-model=answer.selected :id="'answer_' + answer.id"/>
+                                        <label :for="'answer_' + answer.id">{{answer.id }} - {{ answer.text }} - {{ answer.type }}</label>
+                                        <div v-if="showMoreData(answer)">
+                                            {{ answer.type }} - {{ answer.selected }} 
+                                            <input type="text" v-if="answer.type=='text'" v-model="answer.more_data" :placeholder="'Enter: ' + answer.text" />
+                                            <div v-if="answer.type=='image'">
+                                                <picture-input
+                                                    ref="pictureInput"
+                                                    @change="onChanged"
+                                                    width="100" 
+                                                    height="100"
+                                                    >
+                                                </picture-input>
+                                                <!-- <button @click="attemptUpload">Upload</button> -->
+                                            </div>
+                                            <datepicker v-if="answer.type=='date'" :inline="true"></datepicker>
+                                            <vue-timepicker v-if="answer.type=='time'" :minute-interval="30"></vue-timepicker>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="card-action">

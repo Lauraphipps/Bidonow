@@ -22,6 +22,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home),
+    path('upload-file/', views.upload_file),
     path('make-bid/<int:bid_id>/', views.make_bid),
     path('api/workflows/<int:bid_id>', views.api_get_bid),
     path('admin/', admin.site.urls),

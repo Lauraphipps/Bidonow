@@ -1,84 +1,26 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource'
+import PictureInput from 'vue-picture-input'
+import axios from 'axios';
+import Datepicker from 'vuejs-datepicker';
+import VueTimepicker from 'vue2-timepicker'
+
+
 Vue.use(VueResource);
 
 
-Vue.component('answer', {
-    props: ['answer', 'question'],
-    render: function (createElement) {
-        var childs = [];
-        var answer_id = 'id_answer_' + this.answer.id
-        var question_control_type = 'radio';
-        if (this.question.type == 'multi') {
-            question_control_type = 'checkbox'
-        }
-        childs.push(
-            createElement(
-                'input',
-                {
-                    attrs: {
-                        type: question_control_type,
-                        value: this.answer.id,
-                        name: 'test',
-                        id: answer_id
-                    }
-                },
-                []
-            )
-        );
-        childs.push(
-            createElement(
-                'label',
-                {
-                    attrs: {
-                        'for': answer_id
-                    }
-                },
-                [this.answer.text]
-            )
-        );
-        if (this.answer.type == 'text') {
-            var answer_data_id = 'answer_data_' + this.answer.id
-            childs.push(
-                createElement(
-                    'input',
-                    {
-                        attrs: {
-                            type: 'text',
-                            name: answer_data_id,
-                            id: answer_data_id,
-                            placeholder: 'Enter: ' + this.answer.text
-                        }
-                    }
-                )
-            )
-            childs.push(
-                createElement(
-                    'label',
-                    {
-                        attrs: {
-                            'for': answer_data_id,
-                        }
-                    }
-                )
-            )
-        }
-        if (this.answer.type == 'date') {
-            childs.push(createElement('div','Show date picker'))
-        }
-        if (this.answer.type == 'time') {
-            childs.push(createElement('div','Show time picker'))
-        }
-        if (this.answer.type == 'image') {
-            childs.push(createElement('div','Show image uploader'))
-        }
-        return createElement(
-            'li', 
-            {},
-            childs
-        )
-  }
-});
+var uploadFile =  function (file) {
+  const url = '/upload-file/';
+  const name = 'file1'
+  const formData = new FormData();
+  formData.append(name, file);
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  };
+  return axios.post(url, formData, config);
+};
 
 
 
@@ -90,6 +32,11 @@ var app = new Vue({
         cq_idx: null
 
     },
+    components: {
+        PictureInput,
+        Datepicker,
+        VueTimepicker
+    },
     created: function () {
         this.$http.get('/api/workflows/' + WORKFLOW_ID).then((response) => {
             this.workflow = response.data.workflow;
@@ -98,6 +45,18 @@ var app = new Vue({
         });
     },
     methods: {
+        showMoreData(answer) {
+            // if type for answer is not defined
+            if (!answer.type) return false;
+
+            // if question is multi
+            if (answer.selected) return true;
+
+            // if question is one
+            if (this.cq.selected == answer.id) return true;
+
+            return false;
+        },
         goNext(event) {
             event.preventDefault();
             this.cq_idx += 1;
@@ -108,7 +67,16 @@ var app = new Vue({
             this.cq_idx -= 1;
             this.cq = this.workflow.questions[this.cq_idx];
         },
-        reverseMessage: function () {
+        onChanged(image) {
+            if (image) {
+                this.image = this.$refs.pictureInput[0].file;
+                // this.image = image;
+            } else {
+                console.log("Old browser. No support for Filereader API");
+            }
+        },
+        attemptUpload: function (image) {
+            uploadFile(this.image);
         }
 
     },
