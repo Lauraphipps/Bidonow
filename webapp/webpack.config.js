@@ -4,9 +4,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: {
-        "main.js": path.resolve(__dirname, 'static', 'js', 'main.js'),
+        "main": path.resolve(__dirname, 'static', 'js', 'main.js'),
         "make-bid": path.resolve(__dirname, 'static', 'js', 'make-bid.js'),
-        "main.scss": path.resolve(__dirname, 'static', 'sass', 'main.scss')
+        "main-css": path.resolve(__dirname, 'static', 'sass', 'main.scss')
     },
     output: {
         filename: '[name].js',
@@ -42,7 +42,7 @@ module.exports = {
         // Options similar to the same options in webpackOptions.output
         // both options are optional
         filename: "[name].css",
-        chunkFilename: "[id].css"
+        chunkFilename: "[id]"
         })
     ]    
 };

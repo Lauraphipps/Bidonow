@@ -1,5 +1,4 @@
 import _ from 'lodash';
-// import '../sass/main.scss'
 import Vue from 'vue';
 
 function component() {
