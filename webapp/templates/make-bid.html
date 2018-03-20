@@ -25,14 +25,14 @@
               <div v-if="this.workflow">
                   <div class="row">
                     <div class="col s12 m6">
-                        <h2>{{ this.workflow.name }}<h2>
+                        <h2>{{ this.workflow.name }} (id: {{ workflow.id }})<h2>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col s12 m6">
                         <div class="card">
                             <div class="card-content">
-                                <span class="card-title">{{ this.cq.text }}</span>
+                                <span class="card-title">{{ this.cq.text }} (id: {{ cq.id }})</span>
                                 <ul>
                                     <li v-if="cq.type=='zip'">
                                         <input type="text" :id="'question_' + cq.id" placeholder="Enter Zip code">
@@ -41,9 +41,8 @@
                                     <li v-else v-for="answer in this.cq.answers">
                                         <input v-if="cq.type=='one'"type="radio" :value="answer.id" :name="'question_' + cq.id" v-model=cq.selected :id="'answer_' + answer.id"/>
                                         <input v-if="cq.type=='multi'"type="checkbox" v-model=answer.selected :id="'answer_' + answer.id"/>
-                                        <label :for="'answer_' + answer.id">{{answer.id }} - {{ answer.text }} - {{ answer.type }}</label>
+                                        <label :for="'answer_' + answer.id">{{ answer.text }} (id: {{answer.id }})</label>
                                         <div v-if="showMoreData(answer)">
-                                            {{ answer.type }} - {{ answer.selected }} 
                                             <input type="text" v-if="answer.type=='text'" v-model="answer.more_data" :placeholder="'Enter: ' + answer.text" />
                                             <div v-if="answer.type=='image'">
                                                 <picture-input

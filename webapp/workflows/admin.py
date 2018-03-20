@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django import forms
+from django.utils.safestring import mark_safe
 import nested_admin
 from . import models
 
@@ -58,6 +59,14 @@ class WorkflowAdmin(nested_admin.NestedModelAdmin):
     inlines = [
         QuestionInline
     ]
+    readonly_fields = ('object_link',)
+
+    def object_link(self, obj):
+        url = '/make-bid/{}/'.format(obj.id)
+        print(url)
+        return mark_safe('<a href="{}">{}</a>'.format(url, url))
+
+    object_link.short_description = "Check on site"
 
 
 admin.site.register(models.Workflow, WorkflowAdmin)
