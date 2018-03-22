@@ -6,13 +6,15 @@
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="{% static "main-css.css" %}"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="{% static "main.css" %}"  media="screen,projection"/>
 
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
     <body>
+        <div id="app">
+        {% verbatim %}
         <nav role="navigation">
             <div class="nav-wrapper">
                 <div class="row">
@@ -29,7 +31,7 @@
                     </div>
                     <div class="col s2">
                         <ul>
-                            <li><a href="/signup" class="btn">Sign up</a></li>
+                            <li><a href="/signup" class="btn" @click.prevent="openSignUp">Sign up</a></li>
                         </ul>
                     </div>
             </div>
@@ -37,15 +39,24 @@
         <!-- Navbar goes here -->
 
         <!-- Page Layout here -->
+          <button id="show-modal" @click="showModal = true">Show Modal</button>
+          <modal v-if="showModal" @close="showModal = false">
+            <!--
+            you can use custom content here to overwrite
+            default content
+            -->
+            <h3 slot="header">custom header</h3>
+           </modal>
         <div class="row">
             <div class="col s12">
-            {% verbatim %}
-            <div id="app">
+            <div>
                 <p>{{ message }}</p>
                 <button v-on:click="reverseMessage" class="btn">Reverse Message</button>
             </div>
-            {% endverbatim %}
             </div>
+        </div>
+
+        {% endverbatim %}
         </div>
 
         <script type="text/javascript" src="{% static "main.js" %}"></script>

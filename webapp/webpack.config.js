@@ -9,7 +9,6 @@ module.exports = {
     entry: {
         "main": path.resolve(__dirname, 'static', 'js', 'main.js'),
         "make-bid": path.resolve(__dirname, 'static', 'js', 'make-bid.js'),
-        "main-css": path.resolve(__dirname, 'static', 'js', 'main-css.js'),
     },
     output: {
         filename: '[name].js',

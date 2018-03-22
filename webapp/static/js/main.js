@@ -1,25 +1,26 @@
 import _ from 'lodash';
 import Vue from 'vue';
+import modal from '../components/modal.vue';
 
-function component() {
-  var element = document.createElement('div');
-
-  // Lodash, currently included via a script, is required for this line to work
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-  return element;
-}
+import '../sass/main.scss'
 
 // document.body.appendChild(component());
-
 
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Hello Vue.js!'
+        message: 'Hello Vue.js!',
+        showModal: false
+    },
+    components: {
+        modal: modal
     },
     methods: {
         reverseMessage: function () {
-        this.message = this.message.split('').reverse().join('')
+            this.message = this.message.split('').reverse().join('')
+        },
+        openSignUp: function () {
+            alert('Open signup');
         }
     }
 });

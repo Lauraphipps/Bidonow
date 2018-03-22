@@ -5,6 +5,8 @@ import Datepicker from 'vuejs-datepicker';
 import VueTimepicker from 'vue2-timepicker'
 import VeeValidate from 'vee-validate';
 
+import '../sass/make-bid.scss'
+
 Vue.use(VeeValidate);
 
 
