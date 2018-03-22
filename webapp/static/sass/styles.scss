@@ -1,0 +1,52 @@
+// COMMON elements starts
+.btn {
+    @extend .btn-flat;
+    background-color: $button-raised-background;
+    color: white;
+}
+// COMMON elements ends
+
+
+// Nav bar starts
+nav {
+    height: 150px;
+    background-color: #ffffff;
+
+    .brand-logo {
+        width: 359px;
+        height: 69px;
+        font-family: BreeSerif;
+        font-size: 93px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 6.13;
+        letter-spacing: normal;
+        text-align: left;
+        color: #555555;
+    }
+    ul.menu li {
+        border-right: 1px solid #000;
+        height: 30px;
+        opacity: 0.2;
+        margin-top: 10px;
+        a {
+            line-height: 30px;
+        }
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
+
+// Nav bar ends
+
+.sign-up {
+  width: 310px;
+  height: 69px;
+  background-blend-mode: normal, overlay;
+  background-image: linear-gradient(#0093b2, #0093b2), linear-gradient(57deg, #000000, #ffffff);
+  a {
+    color: #ffffff;
+  }
+}

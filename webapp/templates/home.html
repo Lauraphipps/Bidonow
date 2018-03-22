@@ -13,15 +13,42 @@
     </head>
 
     <body>
-        <h1>Bidonow homepage</h1>
-        {% verbatim %}
-        <div id="app">
-              <p>{{ message }}</p>
-              <button v-on:click="reverseMessage" class="btn">Reverse Message</button>
+        <nav role="navigation">
+            <div class="nav-wrapper">
+                <div class="row">
+                    <div class="col s2">
+                        <a href="#" class="brand-logo">Bidonow</a>
+                    </div>
+                    <div class="col s8">
+                        <ul class="menu">
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Deals</a></li>
+                            <li><a href="#">Work Reviews</a></li>
+                            <li><a href="#">Work Professionals</a></li>
+                        </ul>
+                    </div>
+                    <div class="col s2">
+                        <ul>
+                            <li><a href="/signup" class="btn">Sign up</a></li>
+                        </ul>
+                    </div>
+            </div>
+        </nav>
+        <!-- Navbar goes here -->
+
+        <!-- Page Layout here -->
+        <div class="row">
+            <div class="col s12">
+            {% verbatim %}
+            <div id="app">
+                <p>{{ message }}</p>
+                <button v-on:click="reverseMessage" class="btn">Reverse Message</button>
+            </div>
+            {% endverbatim %}
+            </div>
         </div>
-        {% endverbatim %}
+
         <script type="text/javascript" src="{% static "main.js" %}"></script>
-        <!-- <script type="text/javascript" src="{% static "test.js" %}"></script> -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <!-- <script type="text/javascript" src="js/materialize.min.js"></script> -->
     </body>

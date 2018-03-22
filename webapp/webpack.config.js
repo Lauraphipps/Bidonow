@@ -3,10 +3,13 @@ const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+    // bug: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/23
+    // disabling cache in watch mode
+    cache: false,
     entry: {
         "main": path.resolve(__dirname, 'static', 'js', 'main.js'),
         "make-bid": path.resolve(__dirname, 'static', 'js', 'make-bid.js'),
-        "main-css": path.resolve(__dirname, 'static', 'sass', 'main.scss')
+        "main-css": path.resolve(__dirname, 'static', 'js', 'main-css.js'),
     },
     output: {
         filename: '[name].js',
