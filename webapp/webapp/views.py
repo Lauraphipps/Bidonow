@@ -36,7 +36,8 @@ def _format_answer(a):
     return {
         'id': a.id,
         'text': a.text,
-        'type': a.answer_type.name if a.answer_type is not None else None
+        'type': a.answer_type.name if a.answer_type is not None else None,
+        'image_url': a.image.url if a.image else None
     }
 
 

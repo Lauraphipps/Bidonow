@@ -42,6 +42,7 @@
                                         <input v-if="cq.type=='one'"type="radio" :value="answer.id" :name="'question_' + cq.id" v-model=cq.selected :id="'answer_' + answer.id"/>
                                         <input v-if="cq.type=='multi'"type="checkbox" v-model=answer.selected :id="'answer_' + answer.id"/>
                                         <label :for="'answer_' + answer.id">{{ answer.text }} (id: {{answer.id }})</label>
+                                        <img v-if="answer.image_url" :src="answer.image_url" style="width: 100px; height: 100px;"/>
                                         <div v-if="showMoreData(answer)">
                                             <input type="text" v-if="answer.type=='text'" v-model="answer.more_data" :placeholder="'Enter: ' + answer.text" />
                                             <input type="number" v-if="answer.type=='number'" v-model="answer.more_data" :placeholder="'Enter: ' + answer.text" />
