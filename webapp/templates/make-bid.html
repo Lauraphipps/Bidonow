@@ -45,6 +45,14 @@
                                         <div v-if="showMoreData(answer)">
                                             <input type="text" v-if="answer.type=='text'" v-model="answer.more_data" :placeholder="'Enter: ' + answer.text" />
                                             <input type="number" v-if="answer.type=='number'" v-model="answer.more_data" :placeholder="'Enter: ' + answer.text" />
+                                            <input
+                                                type="text"
+                                                v-if="answer.type=='money'"
+                                                v-model="answer.more_data"
+                                                v-validate="{ required: true, regex: /^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$/ }" 
+                                                :placeholder="'Enter: ' + answer.text"
+                                                :name="'more_data_' + answer.id"
+                                            />
                                             <div v-if="answer.type=='image'">
                                                 <picture-input
                                                     ref="pictureInput"
@@ -57,6 +65,7 @@
                                             </div>
                                             <datepicker v-if="answer.type=='date'" :inline="true"></datepicker>
                                             <vue-timepicker v-if="answer.type=='time'" :minute-interval="30"></vue-timepicker>
+                                            <p class="red-text" v-if="errors.has('more_data_' + answer.id)">Invalid format</p>
                                         </div>
                                     </li>
                                 </ul>

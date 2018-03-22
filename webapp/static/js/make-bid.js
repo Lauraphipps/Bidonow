@@ -1,12 +1,11 @@
 import Vue from 'vue';
-import VueResource from 'vue-resource'
 import PictureInput from 'vue-picture-input'
 import axios from 'axios';
 import Datepicker from 'vuejs-datepicker';
 import VueTimepicker from 'vue2-timepicker'
+import VeeValidate from 'vee-validate';
 
-
-Vue.use(VueResource);
+Vue.use(VeeValidate);
 
 
 var uploadFile =  function (file) {
@@ -38,7 +37,7 @@ var app = new Vue({
         VueTimepicker
     },
     created: function () {
-        this.$http.get('/api/workflows/' + WORKFLOW_ID).then((response) => {
+        axios.get('/api/workflows/' + WORKFLOW_ID).then((response) => {
             this.workflow = response.data.workflow;
             this.cq_idx = 0;
             this.cq = this.workflow.questions[this.cq_idx];
