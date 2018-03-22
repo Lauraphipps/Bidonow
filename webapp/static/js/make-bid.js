@@ -40,10 +40,14 @@ var app = new Vue({
         axios.get('/api/workflows/' + WORKFLOW_ID).then((response) => {
             this.workflow = response.data.workflow;
             this.cq_idx = 0;
-            this.cq = this.workflow.questions[this.cq_idx];
+            this.changeQuestion();
         });
     },
     methods: {
+        toogleMoreInfo(question) {
+            question.show_more_info = !Boolean(question.show_more_info);
+            console.log(question.show_more_info);
+        },
         showMoreData(answer) {
             // if type for answer is not defined
             if (!answer.type) return false;
@@ -56,15 +60,20 @@ var app = new Vue({
 
             return false;
         },
+        changeQuestion() {
+            var q = this.workflow.questions[this.cq_idx];
+            this.$set(q, 'show_more_info', false)
+            this.cq = q;
+        },
         goNext(event) {
             event.preventDefault();
             this.cq_idx += 1;
-            this.cq = this.workflow.questions[this.cq_idx];
+            this.onChangeQuestion()
         },
         goBack(event) {
             event.preventDefault();
             this.cq_idx -= 1;
-            this.cq = this.workflow.questions[this.cq_idx];
+            this.onChangeQuestion();
         },
         onChanged(image) {
             if (image) {

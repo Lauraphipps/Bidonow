@@ -33,6 +33,12 @@
                         <div class="card">
                             <div class="card-content">
                                 <span class="card-title">{{ this.cq.text }} (id: {{ cq.id }})</span>
+                                <div v-if="cq.more_info">
+                                <a class="btn" @click.prevent="cq.show_more_info = !cq.show_more_info">
+                                    <i class="material-icons left">info_outline</i>
+                                </a>
+                                <div v-if="cq.show_more_info">{{ cq.more_info }}</div>
+                                </div>
                                 <ul>
                                     <li v-if="cq.type=='zip'">
                                         <input type="text" :id="'question_' + cq.id" placeholder="Enter Zip code">

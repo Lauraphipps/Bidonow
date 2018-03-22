@@ -46,7 +46,8 @@ def _format_question(q):
         'id': q.id,
         'text': q.text,
         'type': q.question_type.name,
-        'answers': [_format_answer(a) for a in q.answer_set.all()]
+        'answers': [_format_answer(a) for a in q.answer_set.all()],
+        'more_info': q.more_info
     }
 
 
