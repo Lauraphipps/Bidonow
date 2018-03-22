@@ -2,10 +2,19 @@ from django.db import models
 
 # Create your models here.
 
+class WorkflowCategory(models.Model):
+    name = models.CharField(max_length=200, null=False, blank=False)
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Workflow(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     image = models.ImageField(null=True, blank=True, upload_to='workflows/workflows/')
+    category = models.ForeignKey(WorkflowCategory, blank=True, null=True,  on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -25,6 +34,8 @@ class Question(models.Model):
     workflow = models.ForeignKey(Workflow, blank=False, null=False, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True, upload_to='workflows/questions/')
     order = models.IntegerField(blank=True, null=True)
+    optional = models.BooleanField(blank=False, null=False, default=False)
+    more_info = models.TextField(null=True, blank=True)
     
     class Meta:
         ordering = ['order', 'id']

@@ -1,0 +1,19 @@
+.djn-dynamic-form-workflows-answer .field-text {
+}
+
+.djn-dynamic-form-workflows-answer .field-text input{
+    width: 200px;
+}
+
+.field-order input {
+    width: 10px;
+}
+
+.field-more_info textarea {
+    width: 200px;
+    height: 30px;
+}
+
+.field-next_question select{
+    width: 100px;
+}

@@ -7,6 +7,7 @@ from . import models
 
 admin.site.register(models.QuestionType)
 admin.site.register(models.AnswerType)
+admin.site.register(models.WorkflowCategory)
 
 
 class FormSetWithParent(forms.BaseInlineFormSet):
@@ -60,6 +61,10 @@ class WorkflowAdmin(nested_admin.NestedModelAdmin):
         QuestionInline
     ]
     readonly_fields = ('object_link',)
+    class Media:
+        css = {
+             'all': ('workflows/admin/workflow.css',)
+        }
 
     def object_link(self, obj):
         url = '/make-bid/{}/'.format(obj.id)
