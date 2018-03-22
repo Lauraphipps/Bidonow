@@ -44,6 +44,13 @@ var app = new Vue({
         });
     },
     methods: {
+        hasChoices() {
+            const res = (this.cq.answers.length > 1);
+            if (!res && !this.cq.answers[0].selected) {
+                this.cq.answers[0].selected = true;
+            }
+            return res;
+        },
         toogleMoreInfo(question) {
             question.show_more_info = !Boolean(question.show_more_info);
             console.log(question.show_more_info);
@@ -68,12 +75,12 @@ var app = new Vue({
         goNext(event) {
             event.preventDefault();
             this.cq_idx += 1;
-            this.onChangeQuestion()
+            this.changeQuestion()
         },
         goBack(event) {
             event.preventDefault();
             this.cq_idx -= 1;
-            this.onChangeQuestion();
+            this.changeQuestion();
         },
         onChanged(image) {
             if (image) {

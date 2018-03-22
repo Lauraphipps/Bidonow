@@ -41,14 +41,21 @@
                                 </div>
                                 <ul>
                                     <li v-if="cq.type=='zip'">
-                                        <input type="text" :id="'question_' + cq.id" placeholder="Enter Zip code">
+                                        <input type="text" :id="'question_' + cq.id" placeholder="Enter Zip code" v-model="cq.more_data">
                                         <label :for="'question_' + cq.id">Enter Zip Code</label>
                                     </li>
                                     <li v-else v-for="answer in this.cq.answers">
+                                        <div v-if="hasChoices()">
                                         <input v-if="cq.type=='one'"type="radio" :value="answer.id" :name="'question_' + cq.id" v-model=cq.selected :id="'answer_' + answer.id"/>
                                         <input v-if="cq.type=='multi'"type="checkbox" v-model=answer.selected :id="'answer_' + answer.id"/>
                                         <label :for="'answer_' + answer.id">{{ answer.text }} (id: {{answer.id }})</label>
+                                        </div>
+                                        <div v-if="!hasChoices()">
+                                            {{ answer.text }}
+                                        </div>
+                                        
                                         <img v-if="answer.image_url" :src="answer.image_url" style="width: 100px; height: 100px;"/>
+
                                         <div v-if="showMoreData(answer)">
                                             <input type="text" v-if="answer.type=='text'" v-model="answer.more_data" :placeholder="'Enter: ' + answer.text" />
                                             <input type="number" v-if="answer.type=='number'" v-model="answer.more_data" :placeholder="'Enter: ' + answer.text" />
