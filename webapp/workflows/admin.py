@@ -61,6 +61,7 @@ class WorkflowAdmin(nested_admin.NestedModelAdmin):
         QuestionInline
     ]
     readonly_fields = ('object_link',)
+    list_filter = ('category',)
     class Media:
         css = {
              'all': ('workflows/admin/workflow.css',)

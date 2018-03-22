@@ -27,7 +27,7 @@ DEBUG = True
 
 USE_X_FORWARDED_HOST = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '73.179.34.39', 'stage.bitonow.me', '10.0.0.180']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '73.179.34.39', 'stage.bitonow.me', '10.0.0.180', 'state.bitonow.com']
 
 
 # Application definition
