@@ -75,3 +75,6 @@ sass .\static\sass\main.scss .\static\dist\main.css
 CREATE ROLE bidonow WITH LOGIN PASSWORD 'xxxxxxxx';
 CREATE DATABASE bidonow;
 GRANT ALL PRIVILEGES ON DATABASE bidonow TO bidonow;
+-- we need CREATEDB permission to create test DB
+ALTER USER bidonow CREATEDB;
+```
