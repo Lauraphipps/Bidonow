@@ -51,12 +51,22 @@ def _format_question(q):
     }
 
 
+def _get_questions_for_bundle(bundle):
+    questions = list(bundle.question_set.all())
+    for q in questions:
+        if not q.question_type.is_bundle: 
+            yield q
+        else:
+            for q1 in _get_questions_for_bundle(q.question_type):
+                yield q1
+
+
 def api_get_bid(request, bid_id):
     workflow = Workflow.objects.get(id=bid_id)
     workflow_data = {
         'id': workflow.id,
         'name': workflow.name,
-        'questions': [_format_question(q) for q in workflow.question_set.all()]
+        'questions': [_format_question(q) for q in _get_questions_for_bundle(workflow)]
     }
     data = {
         'workflow': workflow_data
