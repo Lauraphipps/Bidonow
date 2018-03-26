@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Import Google Icon Font-->
+        <title>Raw SQL</title>
+    <style>
+        .sql_str_input {
+                width: 100%;
+                height: 100px;
+        }
+    </style>
+    </head>
+    <body>
+        <h1>Raw SQL</h1>
+        <form method="POST" action=".">{% csrf_token %}
+            <h2>Enter raw SQL</h2>
+            <textarea name='sql_str' class="sql_str_input">{{ sql_str }}</textarea>
+            <button type="Submit">GO</button>
+        </form>
+        {% if result %}
+        <h2> Result </h2>
+        <table border="1">
+            <thead>
+                {% for field in result.fields %}
+                <th>{{ field }}</th>
+                {% endfor %}
+            </thead>
+            <tbody>
+                {% for row in result.rows %}
+                <tr>
+                    {% for val in row %}
+                    <th>{{ val }}</th>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <h2>Help</h2>
+        <table border="1">
+            <tr>
+                <td>List of all tables</td>
+                <td>select * from information_schema.tables where table_schema='public' and table_catalog='bidonow';</td>
+            </tr>
+            <tr>
+                <td>Table columns</td>
+                <td>SELECT * FROM information_schema.columns WHERE table_schema = 'public' AND table_name   = 'your_table';</td>
+            </tr>
+    </body>
+</html>

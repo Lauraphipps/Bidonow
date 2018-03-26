@@ -1,12 +1,29 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
+from django.db import connection
 from workflows.models import Workflow
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 import os
 import uuid
+from django.contrib.admin.views.decorators import staff_member_required
 
+
+@staff_member_required
+def raw_sql(request):
+    sql_str = request.POST.get('sql_str', '')
+    result = None
+    if sql_str:
+        with connection.cursor() as cursor:
+            cursor.execute(sql_str)
+            rows = cursor.fetchall()
+            fields = [field[0] for field in cursor.description]
+            result = {
+                'fields': fields,
+                'rows': rows
+            }
+    return render(request, 'raw-sql.html', {'result': result, 'sql_str': sql_str})
 
 
 def home(request):
