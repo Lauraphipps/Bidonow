@@ -5,7 +5,6 @@ import nested_admin
 from . import models
 
 
-admin.site.register(models.QuestionType)
 admin.site.register(models.AnswerType)
 admin.site.register(models.WorkflowCategory)
 
@@ -28,8 +27,8 @@ class AnswerForm(forms.ModelForm):
         super(AnswerForm, self).__init__(*args, **kwargs)
         if self.instance and parent_question and parent_question.pk is not None: # Editing and existing instance
             next_question_field = self.fields['next_question']
-            workflow =parent_question.workflow
-            next_question_field.queryset = models.Question.objects.filter(workflow=workflow)
+            bundle =parent_question.bundle
+            next_question_field.queryset = models.Question.objects.filter(bundle=bundle)
 
 
 class AnswerInline(nested_admin.NestedTabularInline):
@@ -55,7 +54,6 @@ class QuestionInline(nested_admin.NestedTabularInline):
     extra = 0
 
 
-
 class WorkflowAdmin(nested_admin.NestedModelAdmin):
     inlines = [
         QuestionInline
@@ -76,3 +74,26 @@ class WorkflowAdmin(nested_admin.NestedModelAdmin):
 
 
 admin.site.register(models.Workflow, WorkflowAdmin)
+
+
+class QuestionInlineQuestionType(nested_admin.NestedTabularInline):
+    model = models.Question
+    fk_name = 'bundle'
+    ordering = ['order', 'id']
+    inlines = [
+        AnswerInline
+    ]
+    extra = 0
+
+
+class QuestionTypeAdmin(nested_admin.NestedModelAdmin):
+    inlines = [
+        QuestionInlineQuestionType
+    ]
+    class Media:
+        css = {
+             'all': ('workflows/admin/workflow.css',)
+        }
+
+
+admin.site.register(models.QuestionType, QuestionTypeAdmin)

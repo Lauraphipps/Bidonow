@@ -19,55 +19,48 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True, null=True)),
             ],
         ),
-        migrations.RemoveField(
+
+        migrations.AlterField(
             model_name='question',
             name='workflow',
+            field=models.IntegerField(default=None, null=False),
         ),
-        migrations.RemoveField(
-            model_name='questiontype',
-            name='description',
-        ),
-        migrations.RemoveField(
-            model_name='questiontype',
-            name='id',
-        ),
-        migrations.RemoveField(
-            model_name='questiontype',
-            name='name',
-        ),
-        migrations.RemoveField(
-            model_name='workflow',
-            name='description',
-        ),
-        migrations.RemoveField(
-            model_name='workflow',
-            name='id',
-        ),
-        migrations.RemoveField(
-            model_name='workflow',
-            name='name',
-        ),
+
         migrations.AlterField(
             model_name='question',
             name='question_type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='bundle_ref', to='workflows.QuestionType'),
+            field=models.IntegerField(default=None, null=False),
         ),
+
+        migrations.AlterField(
+            model_name='workflow',
+            name='id',
+            field=models.IntegerField(default=None, null=False),
+        ),
+
+        migrations.AlterField(
+            model_name='questiontype',
+            name='id',
+            field=models.IntegerField(default=None, null=False),
+        ),
+
         migrations.AddField(
             model_name='question',
             name='bundle',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='workflows.QuestionBundle'),
+            field=models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='workflows.QuestionBundle'),
             preserve_default=False,
         ),
+
         migrations.AddField(
             model_name='questiontype',
             name='questionbundle_ptr',
-            field=models.OneToOneField(auto_created=True, default=None, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='workflows.QuestionBundle'),
-            preserve_default=False,
+            field=models.OneToOneField(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='workflows.QuestionBundle'),
         ),
+
         migrations.AddField(
             model_name='workflow',
             name='questionbundle_ptr',
-            field=models.OneToOneField(auto_created=True, default=None, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='workflows.QuestionBundle'),
-            preserve_default=False,
+            field=models.OneToOneField(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='workflows.QuestionBundle'),
         ),
+
     ]
