@@ -78,3 +78,28 @@ GRANT ALL PRIVILEGES ON DATABASE bidonow TO bidonow;
 -- we need CREATEDB permission to create test DB
 ALTER USER bidonow CREATEDB;
 ```
+
+
+## BACKUP/RESTORE DB
+
+For Widnows:
+
+```
+# Backup
+pg_dump dbname > ..\..\backups\bidonow_20180324.bak
+# restore DB
+psql -U postgres -f create_bidonow.sql
+Get-Content bidonow_20180324.bak | psql -U postgres bidonow
+```
+
+For  Unix:
+
+```
+# Backup
+pg_dump dbname > ../../backups/bidonow_20180324.bak
+# restore DB
+psql -U postgres -f create_bidonow.sql
+psql -U postgres bidonow < ..\..\backups\bidonow_20180324.bak
+```
+
+
