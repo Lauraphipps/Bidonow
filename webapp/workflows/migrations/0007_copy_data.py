@@ -12,14 +12,12 @@ def copy_data(apps, schema_editor):
     Question = apps.get_model('workflows', 'Question')
 
     print('Move Workflow to bundle')
-    for w in Workflow.objects.all():
-        print('Create bundle')
+    for w in Workflow.objects.all().order_by('id'):
         qb = QuestionBundle.objects.create(
             name=w.name,
             description=w.description
         )
-        print('Update workflow')
-        print('qb.id={}'.format(qb.id))
+        print('Create bundle with id={} for workflow.id={}, name={}'.format(qb.id, w.id, w.name))
         w.questionbundle_ptr = qb
         w.save()
         for q in Question.objects.filter(workflow=w.id):
@@ -27,17 +25,24 @@ def copy_data(apps, schema_editor):
             q.save()
 
     print('Move QuestionType to bundle')
+    question_type_tmp = {}
     for qt in QuestionType.objects.all():
-        print('Create bundle')
         qb = QuestionBundle.objects.create(
             name=qt.name,
             description=qt.description
         )
+        print('Create bundle with id={} for question_type.id={}, name={}'.format(qb.id, qt.id, qt.name))
         qt.questionbundle_ptr = qb
         qt.save()
+        print('After save question_type.id={}'.format(qb.id, qt.id))
         for q in Question.objects.filter(question_type=qt.id):
-            q.question_type = qb.id
-            q.save()
+            question_type_tmp[q.id] = qb.id
+
+    print('Update question_type for question')
+    for q in Question.objects.all():
+        print('For question={}, old={}, new={}'.format(q.id, q.question_type, question_type_tmp[q.id]))
+        q.question_type = question_type_tmp[q.id]
+        q.save()
 
 
 class Migration(migrations.Migration):
