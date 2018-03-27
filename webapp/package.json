@@ -23,11 +23,13 @@
     "vue-template-compiler": "^2.5.16",
     "vue2-timepicker": "^0.1.4",
     "vuejs-datepicker": "^0.9.29",
+    "vuetify": "^1.0.10",
     "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12"
+    "webpack-cli": "^2.0.12",
+    "webpack-merge": "^4.1.2"
   },
   "scripts": {
-    "watch": "webpack --watch --progress --colors --mode=development",
+    "watch-control-panel": "webpack --watch --progress --colors --mode=development --config webpack.control-panel.js",
     "build": "webpack --mode=development"
   }
 }

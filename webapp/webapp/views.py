@@ -3,11 +3,19 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.db import connection
 from workflows.models import Workflow
+from workflows import models
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 import os
 import uuid
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.files import File as DjangoFile
+from django.db import models as django_models
+
+
+@staff_member_required
+def control_panel(request):
+    return render(request, 'control-panel/home.html', {})
 
 
 @staff_member_required
@@ -76,6 +84,67 @@ def _get_questions_for_bundle(bundle):
         else:
             for q1 in _get_questions_for_bundle(q.question_type):
                 yield q1
+
+
+def api_workflowcategory_list(request):
+    items = [
+        {'id': r.id, 'name': r.name} for r in models.WorkflowCategory.objects.all()
+    ]
+    data = {
+        'workflowcategories': items
+    }
+    return JsonResponse(data)
+
+
+def api_workflow_items(request):
+    items = [
+        {'id': r.id, 'name': r.name} for r in models.Workflow.objects.all()
+    ]
+    data = {
+        'workflow_items': items
+    }
+    return JsonResponse(data)
+
+
+def object_to_dict(obj, extra=None):
+    fields = obj._meta.get_fields()
+    data = {}
+    for field in fields:
+        add_field_value(data, obj, field)
+    if extra is not None:
+        for name, func in extra.items():
+            data[name] = func(obj)
+    return data
+
+
+def objects_to_list(objects, extra=None):
+    return [
+        object_to_dict(obj, extra=extra) for obj in objects
+    ]
+
+def add_field_value(data, obj, field):
+    if field.is_relation:
+        return
+    if isinstance(field, django_models.ImageField):
+        return
+    data[field.name] = getattr(obj, field.name)
+
+
+def api_workflow_item(request, workflow_id):
+    w = models.Workflow.objects.get(id=workflow_id)
+    item = {
+        'id': w.id,
+        'name': w.name,
+        'questions': objects_to_list(
+            w.question_set.all(),
+            extra={'answers': lambda q: objects_to_list(q.answer_set.all())}
+        )
+    }
+
+    data = {
+        'workflow': item
+    }
+    return JsonResponse(data)
 
 
 def api_get_bid(request, bid_id):
