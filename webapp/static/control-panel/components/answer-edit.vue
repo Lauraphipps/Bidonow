@@ -1,7 +1,6 @@
 <template>
-    <div class="question-edit">
+    <div class="answer-edit">
       <v-dialog v-model="showDialog" max-width="500px">
-      <v-btn color="primary" dark slot="activator" class="mb-2" @click="newItem">New Question</v-btn>
       <v-card>
         <v-card-title>
           <span class="headline">{{ formTitle }}</span>
@@ -13,23 +12,14 @@
                 <v-text-field label="Text" v-model="item.text"></v-text-field>
               </v-flex>
               <v-flex xs12 sm12 md12>
-                <v-select label="Type" v-model="item.question_type" :items="questionTypes">
+                <v-select label="Type" v-model="item.answer_type" :items="answerTypes">
                     <template slot="selection" slot-scope="data">{{ data.item.name }}</template>
                     <template slot="item" slot-scope="data">
                         <v-list-tile-content v-text="data.item.name"></v-list-tile-content>
                     </template>
                 </v-select>
               </v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field label="More Info" v-model="item.more_info" multi-line></v-text-field>
-              </v-flex>
             </v-layout>
-              <v-flex xs12 sm12 md12>
-                <v-checkbox
-                    label="Optional"
-                    v-model="item.optional"
-                ></v-checkbox>
-              </v-flex>
           </v-container>
         </v-card-text>
         <v-card-actions>
@@ -53,16 +43,16 @@ export default {
   },
   methods: {
     fetchItem() {
-        if (this.itemId === null || this.itemId == -1) return;
-        this.$http.get('question/' + this.itemId +'/')
+        if (this.itemId === null || this.itemId === -1) return;
+        this.$http.get('answer/' + this.itemId +'/')
         .then(response => {
             this.item = response.data
-            this.attachQuestionType(this.item);
+            this.attachAnswerType(this.item);
         });
     },
-    attachQuestionType(item) {
-        var question_type = _.find(this.questionTypes, (o) => o.id === item.question_type_id);
-        item.question_type = question_type;
+    attachAnswerType(item) {
+        var answer_type = _.find(this.answerTypes, (o) => o.id === item.answer_type_id);
+        item.answer_type = answer_type;
     },
     close () {
         this.showDialog = false
@@ -72,13 +62,15 @@ export default {
         }, 300)
     },
     save() {
-        this.item.question_type_id = this.item.question_type.id;
-        this.$http.post('/question/save', this.item)
+        if (!_.isNil(this.item.answer_type)) {
+            this.item.answer_type_id = this.item.answer_type.id;
+        }
+        this.$http.post('/answer/save', this.item)
         .then(response => {
             alert('Saved!');
             this.showDialog = false;
             var new_item = response.data;
-            this.attachQuestionType(new_item);
+            this.attachAnswerType(new_item);
             this.$emit('on-save', new_item);
         });
     },
@@ -90,14 +82,17 @@ export default {
   watch: {
     itemId() {
         this.showDialog = true;
+        if (this.itemId === -1) {
+            this.item = _.cloneDeep(this.default);
+        }
         this.fetchItem();
     }
   },
   created() {
     this.fetchItem();
-    this.$http.get('/question-types/')
+    this.$http.get('/answer-types/')
     .then(response => {
-        this.questionTypes = response.data.question_types;
+        this.answerTypes = response.data.items;
     });
   },
   data() {
@@ -105,7 +100,7 @@ export default {
         item: {},
         showDialog: false,
         formTitle: 'TEST',
-        questionTypes: []
+        answerTypes: []
     }
   }
 }

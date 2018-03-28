@@ -30,10 +30,17 @@ urlpatterns = [
     path('api/workflow/<int:workflow_id>/', views.api_workflow_item),
     path('api/workflow/save', views.api_workflow_save),
     path('api/workflow/delete', views.api_workflow_delete),
+
     path('api/question-types/', views.api_question_types),
     path('api/question/<int:question_id>/', views.api_question_get),
     path('api/question/save', views.api_question_save),
     path('api/question/delete', views.api_question_delete),
+
+    path('api/answer-types/', views.api_answer_types),
+    path('api/answer/<int:answer_id>/', views.api_answer_get),
+    path('api/answer/save', views.api_answer_save),
+    path('api/answer/delete', views.api_answer_delete),
+
     path('admin/control-panel/', views.control_panel),
     path('admin/raw-sql/', views.raw_sql),
     path('admin/', admin.site.urls),

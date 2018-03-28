@@ -48,13 +48,25 @@
                             <td><div v-if="props1.item.answer_type">{{ props1.item.answer_type }}</div><div v-else>None</div></td>
                             <td>{{ props1.item.text }}</td>
                             <td>{{ props1.item.next_question_text }}</td>
+                            <td class="justify-center layout px-0">
+                                <v-btn icon class="mx-0" @click="editAnswer(props1.item)">
+                                    <v-icon color="teal">edit</v-icon>
+                                </v-btn>
+                                <v-btn icon class="mx-0" @click="deleteAnswer(props1.item)">
+                                    <v-icon color="pink">delete</v-icon>
+                                </v-btn>
+                            </td>
                         </tr>
                     </template>
                 </v-data-table>
+                <v-btn class="mx-0" @click="addAnswer(props.item)">
+                    Add Answer
+                </v-btn>
                 </v-flex>
             </template>
         </v-data-table>
         <question-edit :itemId="editedItemId" :default="{'bundle_id': item.id}" @on-save="onQuestionSaved"/>
+        <answer-edit :itemId="editedAnswerId" :default="defaultAnswer" @on-save="onAnswerSaved"/>
     </div> <!-- item -->
     <div v-else>
         Load data
@@ -68,6 +80,7 @@
 
 <script>
 import QuestionEdit from './question-edit.vue';
+import AnswerEdit from './answer-edit.vue';
 import _ from 'lodash';
 
 export default {
@@ -76,7 +89,7 @@ export default {
     id: Number
   },
   components: {
-    QuestionEdit
+    QuestionEdit, AnswerEdit
   },
   methods: {
     fetchWorkFlow() {
@@ -110,6 +123,52 @@ export default {
                 this.item.questions.splice(index, 1);
             });
         };
+    },
+    editAnswer(item) {
+        this.defaultAnswer = {question_id: item.question_id}
+        this.editedAnswerId = item.id;
+    },
+    deleteAnswer(item) {
+        const questionIdx = _.findIndex(this.item.questions, (o) => o.id == item.question_id);
+        const answers = this.item.questions[questionIdx].answers;
+        const idx = answers.indexOf(item)
+        if (confirm('Are you sure you want to delete this item?')) {
+            this.$http.post('/answer/delete', {id: item.id})
+            .then(response => {
+                alert('Deleted');
+                answers.splice(idx, 1);
+            });
+        };
+    },
+    addAnswer(question) {
+        this.defaultAnswer = {question_id: question.id};
+        this.editedAnswerId = -1;
+    },
+    onAnswerSaved(item) {
+        const questionIdx = _.findIndex(this.item.questions, (o) => o.id == item.question_id);
+        const answers = this.item.questions[questionIdx].answers;
+        if (this.editedAnswerId !== null && this.editedAnswerId !== -1) {
+            const idx = _.findIndex(answers, (o) => o.id == item.id);
+            var old_item = answers[idx];
+            var new_item = _.extend(old_item, item);
+            if (!_.isNil(item.answer_type)) {
+                new_item.answer_type = item.answer_type.name;
+                new_item.answer_type_id = item.answer_type.id;
+            } else {
+                new_item.answer_type = 'None';
+                new_item.answer_type_id = -1;
+            }
+            Object.assign(answers[idx], new_item);
+        } else {
+            if (!_.isNil(item.answer_type)) {
+                item.answer_type = item.answer_type.name;
+                item.answer_type_id = item.answer_type.id;
+            } else {
+                item.answer_type = 'None';
+                item.answer_type_id = -1;
+            }
+            answers.push(item)
+        }
     }
   },
   watch: {
@@ -124,6 +183,8 @@ export default {
     return {
         item: {},
         editedItemId: null,
+        editedAnswerId: null,
+        defaultAnswer: {},
         headers: [
             { text: '', sortable: false},
             {
@@ -140,6 +201,7 @@ export default {
             { text: 'Type', sortable: false},
             {text: 'Text', value: 'text', sortable: false},
             { text: 'next_question_text', value: 'text', sortable: false },
+            { text: 'Actions', value: 'name', sortable: false }
         ]
     }
   }

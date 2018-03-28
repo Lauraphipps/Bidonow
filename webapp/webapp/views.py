@@ -160,6 +160,40 @@ def set_field_for_obj(obj, field, data):
     if field_name in data:
         setattr(obj, field_name, data[field_name])
 
+def api_answer_types(request):
+    data = {
+        'items': objects_to_list(models.AnswerType.objects.all())
+    }
+    return JsonResponse(data)
+
+
+def api_answer_get(request, answer_id):
+    q = models.Answer.objects.get(id=answer_id)
+    data = object_to_dict(q)
+    return JsonResponse(data)
+
+@csrf_exempt
+def api_answer_save(request):
+    data = json.loads(request.body)
+    model_class = models.Answer
+    if data.get('id'):
+        q = model_class.objects.get(id=data['id'])
+    else:
+        q = model_class()
+    set_fields_for_obj(q, data)
+    q.save()
+    response_data = object_to_dict(q)
+    return JsonResponse(response_data)
+
+
+@csrf_exempt
+def api_answer_delete(request):
+    data = json.loads(request.body)
+    q = models.Answer.objects.get(id=data['id'])
+    q.delete()
+    return JsonResponse({})
+
+
 def api_question_types(request):
     data = {
         'question_types': objects_to_list(models.QuestionType.objects.all())
