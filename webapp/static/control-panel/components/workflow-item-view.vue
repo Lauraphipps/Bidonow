@@ -1,5 +1,8 @@
 <template>
   <div class="workflow-item-view">
+  <v-container fluid>
+        <v-layout row wrap>
+            <v-flex xs6>
     <h3>This is workflow item view</h3>
     <div v-if="item">
         <div>Id: {{ item.id }}</div>
@@ -27,6 +30,12 @@
         Load data
         <v-progress-linear :indeterminate="true"></v-progress-linear>
     </div>
+        </v-flex xs6>
+        <v-flex xs6>
+        <h3>Preview</h3>
+        </v-flex xs6>
+    </v-layout>
+    </v-container>
   </div>
 </template>
 

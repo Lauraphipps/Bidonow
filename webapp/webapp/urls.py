@@ -28,6 +28,8 @@ urlpatterns = [
     path('api/workflowcategory/', views.api_workflowcategory_list),
     path('api/workflow/', views.api_workflow_items),
     path('api/workflow/<int:workflow_id>/', views.api_workflow_item),
+    path('api/workflow/save', views.api_workflow_save),
+    path('api/workflow/delete', views.api_workflow_delete),
     path('admin/control-panel/', views.control_panel),
     path('admin/raw-sql/', views.raw_sql),
     path('admin/', admin.site.urls),

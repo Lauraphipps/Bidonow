@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 import os
 import uuid
+import json
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.files import File as DjangoFile
 from django.db import models as django_models
@@ -97,8 +98,18 @@ def api_workflowcategory_list(request):
 
 
 def api_workflow_items(request):
+    category_id = request.GET.get('category_id')
+    qs = models.Workflow.objects.all()
+    if category_id:
+        qs = qs.filter(category__id=category_id)
     items = [
-        {'id': r.id, 'name': r.name} for r in models.Workflow.objects.all()
+        {
+            'id': r.id,
+            'name': r.name,
+            'description': r.description,
+            'category_id': r.category_id, 
+            'category_name': r.category.name if r.category else None
+        } for r in qs
     ]
     data = {
         'workflow_items': items
@@ -135,6 +146,7 @@ def api_workflow_item(request, workflow_id):
     item = {
         'id': w.id,
         'name': w.name,
+        'description': w.description,
         'questions': objects_to_list(
             w.question_set.all(),
             extra={'answers': lambda q: objects_to_list(q.answer_set.all())}
@@ -145,6 +157,32 @@ def api_workflow_item(request, workflow_id):
         'workflow': item
     }
     return JsonResponse(data)
+
+
+@csrf_exempt
+def api_workflow_save(request):
+    data = json.loads(request.body)
+    # {'id': 21, 'name': 'Aerial Photography', 'description': '', 'category_id': 1, 'category_name': 'Video', 'category': {'id': 1, 'name': 'Video'}}
+    if data.get('id'):
+        w = Workflow.objects.get(id=data['id'])
+    else:
+        w = Workflow()
+    w.name = data['name']
+    w.description = data.get('description')
+    if data.get('category_id'):
+        w.category_id = data['category_id']
+    w.save()
+
+    return JsonResponse({'success': True})
+
+
+@csrf_exempt
+def api_workflow_delete(request):
+    data = json.loads(request.body)
+    workflow_id = data['id']
+    w = Workflow.objects.get(id=workflow_id)
+    w.delete()
+    return JsonResponse({'success': True})
 
 
 def api_get_bid(request, bid_id):

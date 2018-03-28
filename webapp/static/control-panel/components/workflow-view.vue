@@ -15,7 +15,7 @@
         </v-layout>
         <v-layout row wrap>
             <v-flex xs6>
-                <workflow-list :items="workflow_items" @select-item="selectItem"/>
+                <workflow-list :items="workflow_items" :categories="workflow_categories" @select-item="selectItem" />
             </v-flex>
         </v-layout>
     </v-container>
@@ -48,7 +48,13 @@ export default {
   },
   methods: {
     fetchWorkflowItems() {
-        this.$http.get('/workflow/')
+        var params  = {};
+        console.log(this.filter_workflow_category);
+        if (this.filter_workflow_category !== null) {
+            params.category_id = this.filter_workflow_category.id;
+        }
+        console.log('Fetch data', params);
+        this.$http.get('/workflow/', {params: params})
         .then(response => {
             this.workflow_items = response.data.workflow_items;
         });
