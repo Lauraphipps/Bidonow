@@ -1,85 +1,68 @@
 <template>
   <div class="workflow-view">
-  <div v-if="!selectedItem">
-  <h2>Workflow list</h2>
-    <v-container fluid>
+    <v-container fluid grid-list-xl>
         <v-layout row wrap>
-            <v-flex xs6>
-                <v-select :items="workflow_categories" v-model="filter_workflow_category" label="Filter by category" :loading="workflow_categories_loading">
-                    <template slot="selection" slot-scope="data">{{ data.item.name }}</template>
-                    <template slot="item" slot-scope="data">
-                        <v-list-tile-content v-text="data.item.name"></v-list-tile-content>
-                    </template>
-                </v-select>
+            <v-flex xs3>
+    <v-navigation-drawer permanent>
+    <v-toolbar flat>
+      <v-list>
+        <v-list-tile>
+          <v-list-tile-title class="title">
+            Bidonow Admin
+          </v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-toolbar>
+    <v-divider></v-divider>
+    <v-list dense class="pt-0">
+      <v-list-tile v-for="tab in tabs" @click="currentTab = tab" :class="['tab-button', { active: currentTab === tab }]">
+        <v-list-tile-content>
+          <v-list-tile-title>{{ tab.name }}</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+    </v-list>
+  </v-navigation-drawer>
             </v-flex>
-        </v-layout>
-        <v-layout row wrap>
-            <v-flex xs6>
-                <workflow-list :items="workflow_items" :categories="workflow_categories" @select-item="selectItem" />
+            <v-flex xs9>
+            <!-- main content start -->
+            <component v-bind:is="currentTab.component" class="tab" ></component>
+            <!-- main content end -->
             </v-flex>
         </v-layout>
     </v-container>
-  </div> <!-- !selectedItem -->
-  <div v-if="selectedItem">
-  <h2> Workflow Detaild {{ selectedItem.id }} </h2>
-  <workflow-item-view :id="selectedItem.id" @back="showList"/>
-  </div> <!-- selectedItem -->
   </div>
+
 </template>
 
 <script>
 import WorkflowList from './workflow-list.vue'
-import WorkflowItemView from './workflow-item-view.vue'
+
 
 export default {
   name: 'workflow-view',
   components: {
-    WorkflowList,
-    WorkflowItemView
+    WorkflowList
   },
   data() {
     return {
-        workflow_categories: [],
-        workflow_categories_loading: true,
-        filter_workflow_category: null,
-        workflow_items: [],
-        selectedItem: null,
+        tabs: [
+            {'name': 'Workflows', component: 'WorkflowList'},
+            {'name': 'Question Types', component: 'QuestionTypeList'}
+        ],
+        currentTab: null,
+    }
+  },
+  computed: {
+    currentTabComponent: function () {
+      return 'tab-' + this.currentTab.toLowerCase()
     }
   },
   methods: {
-    showList() {
-        this.selectedItem = null;
-    },
-    fetchWorkflowItems() {
-        var params  = {};
-        console.log(this.filter_workflow_category);
-        if (this.filter_workflow_category !== null) {
-            params.category_id = this.filter_workflow_category.id;
-        }
-        console.log('Fetch data', params);
-        this.$http.get('/workflow/', {params: params})
-        .then(response => {
-            this.workflow_items = response.data.workflow_items;
-        });
-    },
-    selectItem(item) {
-        this.selectedItem = item;
-    }
   },
   watch: {
-    filter_workflow_category() {
-        this.fetchWorkflowItems();
-    }
   },
   created() {
-    this.$http.get('/workflowcategory/')
-    .then(response => {
-        var items = response.data.workflowcategories;
-        var all_item = {id: null, name: 'All'};
-        this.workflow_categories = [all_item].concat(items);
-        this.filter_workflow_category = all_item;
-        this.workflow_categories_loading = false;
-    });
+    this.currentTab = this.tabs[0];
   }
 }
 </script>

@@ -1,5 +1,18 @@
 <template>
   <div class="workflow-list">
+    <v-layout row wrap v-if="!selectedItem">
+        <v-flex xs12>
+            <h2>Workflow list</h2>
+                <v-select :items="categories" v-model="filter_workflow_category" label="Filter by category" :loading="workflow_categories_loading">
+                    <template slot="selection" slot-scope="data">{{ data.item.name }}</template>
+                    <template slot="item" slot-scope="data">
+                        <v-list-tile-content v-text="data.item.name"></v-list-tile-content>
+                    </template>
+                </v-select>
+        </v-flex>
+    </v-layout>
+    <v-layout row wrap v-if="!selectedItem">
+        <v-flex xs12>
       <v-dialog v-model="dialog" max-width="500px">
       <v-btn color="primary" dark slot="activator" class="mb-2">New Item</v-btn>
       <v-card>
@@ -38,39 +51,53 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-                  <v-data-table
-                        :headers="headers"
-                        :items="items"
-                        hide-actions
-                    >
-                        <template slot="items" slot-scope="props">
-                        <tr>
-                            <td @click="onRowClick(props.item)">{{ props.item.name }}</td>
-                            <td class="text-xs-right">{{ props.item.category_name }}</td>
-                            <td class="justify-center layout px-0">
-                                <v-btn icon class="mx-0" @click="editItem(props.item)">
-                                    <v-icon color="teal">edit</v-icon>
-                                </v-btn>
-                                <v-btn icon class="mx-0" @click="deleteItem(props.item)">
-                                    <v-icon color="pink">delete</v-icon>
-                                </v-btn>
-                            </td>
-                        </tr>
-                        </template>
-                    </v-data-table>
+        </v-flex>
+    </v-layout>
+    <v-layout row wrap v-if="!selectedItem">
+        <v-flex xs12>
+        <v-data-table
+            :headers="headers"
+            :items="items"
+            hide-actions
+        >
+            <template slot="items" slot-scope="props">
+            <tr>
+                <td @click="onRowClick(props.item)">{{ props.item.name }}</td>
+                <td class="text-xs-right">{{ props.item.category_name }}</td>
+                <td class="justify-center layout px-0">
+                    <v-btn icon class="mx-0" @click="editItem(props.item)">
+                        <v-icon color="teal">edit</v-icon>
+                    </v-btn>
+                    <v-btn icon class="mx-0" @click="deleteItem(props.item)">
+                        <v-icon color="pink">delete</v-icon>
+                    </v-btn>
+                </td>
+            </tr>
+            </template>
+        </v-data-table>
+        </v-flex>
+    </v-layout>
+    <v-layout row wrap v-if="selectedItem">
+        <v-flex xs12 sm12 md12>
+            <h2> Workflow Detaild {{ selectedItem.id }} </h2>
+            <workflow-item-view :id="selectedItem.id" @back="showList"/>
+        </v-flex>
+    </v-layout>
   </div>
 </template>
 <script>
 import _ from 'lodash';
+import WorkflowItemView from './workflow-item-view.vue'
 
 export default {
   name: 'workflow-list',
-  props: {
-    items: Array,
-    categories: Array
+  components: {
+    WorkflowItemView
   },
   data() {
     return {
+        categories: [],
+        items: [],
         headers: [
             {
                 text: 'Name',
@@ -84,11 +111,34 @@ export default {
         dialog: false,
         editedIndex: -1,
         editedItem: {},
+        selectedItem: null,
+        workflow_categories_loading: true,
+        filter_workflow_category: null
+    }
+  },
+  watch: {
+    filter_workflow_category() {
+        this.fetchWorkflowItems();
     }
   },
   methods: {
+    showList() {
+        this.selectedItem = null;
+    },
+    fetchWorkflowItems() {
+        var params  = {};
+        console.log(this.filter_workflow_category);
+        if (this.filter_workflow_category !== null) {
+            params.category_id = this.filter_workflow_category.id;
+        }
+        console.log('Fetch data', params);
+        this.$http.get('/workflow/', {params: params})
+        .then(response => {
+            this.items = response.data.workflow_items;
+        });
+    },
     onRowClick(item) {
-        this.$emit('select-item', item);
+        this.selectedItem = item;
     },
 
     editItem (item) {
@@ -120,19 +170,19 @@ export default {
       },
 
     save () {
-        console.log('try to save', this.editedItem);
         if (this.editedItem.category) {
             this.editedItem.category_id = this.editedItem.category.id;
             this.editedItem.category_name = this.editedItem.category.name;
         }
         this.$http.post('/workflow/save', this.editedItem).
         then(response => {
-            console.log(response);
             alert('Saved');
+            console.log(response.data);
             if (this.editedIndex > -1) {
-            Object.assign(this.items[this.editedIndex], this.editedItem)
+                Object.assign(this.items[this.editedIndex], this.editedItem)
             } else {
-            this.items.push(this.editedItem)
+                this.editedItem.id = response.data.id;
+                this.items.push(this.editedItem)
             }
             this.close()
         });
@@ -142,6 +192,16 @@ export default {
       formTitle () {
         return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
       }
+  },
+  created() {
+    this.$http.get('/workflowcategory/')
+    .then(response => {
+        var items = response.data.workflowcategories;
+        var all_item = {id: null, name: 'All'};
+        this.categories = [all_item].concat(items);
+        this.filter_workflow_category = all_item;
+        this.workflow_categories_loading = false;
+    });
   }
 }
 </script>

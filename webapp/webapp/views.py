@@ -268,7 +268,7 @@ def api_workflow_save(request):
         w.category_id = data['category_id']
     w.save()
 
-    return JsonResponse({'success': True})
+    return JsonResponse(object_to_dict(w))
 
 
 @csrf_exempt
