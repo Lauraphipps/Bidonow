@@ -124,6 +124,9 @@ def object_to_dict(obj, extra=None):
         add_field_value(data, obj, field)
     if extra is not None:
         for name, func in extra.items():
+            print('obj={}'.format(type(obj)))
+            if isinstance(obj, models.Answer):
+                print('answer_type={}'.format(obj.answer_type))
             data[name] = func(obj)
     return data
 
@@ -134,11 +137,61 @@ def objects_to_list(objects, extra=None):
     ]
 
 def add_field_value(data, obj, field):
+    if isinstance(field, django_models.ForeignKey):
+        field_name = '{}_id'.format(field.name)
+        data[field_name] = getattr(obj, field_name)
     if field.is_relation:
         return
     if isinstance(field, django_models.ImageField):
         return
     data[field.name] = getattr(obj, field.name)
+
+
+def set_fields_for_obj(obj, data):
+    fields = obj._meta.get_fields()
+    for f in fields:
+        set_field_for_obj(obj, f, data)
+
+
+def set_field_for_obj(obj, field, data):
+    field_name = field.name
+    if isinstance(field, django_models.ForeignKey):
+        field_name = '{}_id'.format(field.name)
+    if field_name in data:
+        setattr(obj, field_name, data[field_name])
+
+def api_question_types(request):
+    data = {
+        'question_types': objects_to_list(models.QuestionType.objects.all())
+    }
+    return JsonResponse(data)
+
+
+def api_question_get(request, question_id):
+    q = models.Question.objects.get(id=question_id)
+    data = object_to_dict(q)
+    return JsonResponse(data)
+
+
+@csrf_exempt
+def api_question_save(request):
+    data = json.loads(request.body)
+    if data.get('id'):
+        q = models.Question.objects.get(id=data['id'])
+    else:
+        q = models.Question()
+    set_fields_for_obj(q, data)
+    q.save()
+    response_data = object_to_dict(q)
+    return JsonResponse(response_data)
+
+
+@csrf_exempt
+def api_question_delete(request):
+    data = json.loads(request.body)
+    q = models.Question.objects.get(id=data['id'])
+    q.delete()
+    return JsonResponse({})
 
 
 def api_workflow_item(request, workflow_id):
@@ -149,7 +202,15 @@ def api_workflow_item(request, workflow_id):
         'description': w.description,
         'questions': objects_to_list(
             w.question_set.all(),
-            extra={'answers': lambda q: objects_to_list(q.answer_set.all())}
+            extra={
+                'answers': lambda q: objects_to_list(
+                    q.answer_set.all(),
+                    extra={
+                        'answer_type': lambda a: a.answer_type.name if a.answer_type else None
+                    }
+                ),
+                'question_type': lambda q: q.question_type.name
+            }
         )
     }
 
