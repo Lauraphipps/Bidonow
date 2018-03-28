@@ -1,5 +1,6 @@
 <template>
   <div class="workflow-item-view">
+  <v-btn color="primary" dark class="mb-2" @click="$emit('back')">Back</v-btn>
   <v-container fluid>
         <v-layout row wrap>
             <v-flex xs12>

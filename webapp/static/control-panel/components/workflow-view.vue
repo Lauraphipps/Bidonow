@@ -22,7 +22,7 @@
   </div> <!-- !selectedItem -->
   <div v-if="selectedItem">
   <h2> Workflow Detaild {{ selectedItem.id }} </h2>
-  <workflow-item-view :id="selectedItem.id"/>
+  <workflow-item-view :id="selectedItem.id" @back="showList"/>
   </div> <!-- selectedItem -->
   </div>
 </template>
@@ -47,6 +47,9 @@ export default {
     }
   },
   methods: {
+    showList() {
+        this.selectedItem = null;
+    },
     fetchWorkflowItems() {
         var params  = {};
         console.log(this.filter_workflow_category);
