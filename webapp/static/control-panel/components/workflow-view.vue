@@ -24,37 +24,30 @@
   </v-navigation-drawer>
             </v-flex>
             <v-flex xs9>
-            <!-- main content start -->
             <component v-bind:is="currentTab.component" class="tab" ></component>
-            <!-- main content end -->
             </v-flex>
         </v-layout>
     </v-container>
   </div>
-
 </template>
 
 <script>
 import WorkflowList from './workflow-list.vue'
+import QuestionTypeList from './question-type-list.vue'
 
 
 export default {
   name: 'workflow-view',
   components: {
-    WorkflowList
+    WorkflowList, QuestionTypeList
   },
   data() {
     return {
         tabs: [
-            {'name': 'Workflows', component: 'WorkflowList'},
-            {'name': 'Question Types', component: 'QuestionTypeList'}
+            {'name': 'Workflows', component: WorkflowList},
+            {'name': 'Question Types', component: QuestionTypeList}
         ],
         currentTab: null,
-    }
-  },
-  computed: {
-    currentTabComponent: function () {
-      return 'tab-' + this.currentTab.toLowerCase()
     }
   },
   methods: {

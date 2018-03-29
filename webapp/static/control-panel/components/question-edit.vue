@@ -13,7 +13,7 @@
                 <v-text-field label="Text" v-model="item.text"></v-text-field>
               </v-flex>
               <v-flex xs12 sm12 md12>
-                <v-select label="Type" v-model="item.question_type" :items="questionTypes">
+                <v-select label="Type" v-model="item.question_type" :items="questionTypes" required>
                     <template slot="selection" slot-scope="data">{{ data.item.name }}</template>
                     <template slot="item" slot-scope="data">
                         <v-list-tile-content v-text="data.item.name"></v-list-tile-content>
@@ -72,7 +72,9 @@ export default {
         }, 300)
     },
     save() {
-        this.item.question_type_id = this.item.question_type.id;
+        if (!_.isNil(this.item.question_type)) {
+            this.item.question_type_id = this.item.question_type.id;
+        }
         this.$http.post('/question/save', this.item)
         .then(response => {
             alert('Saved!');

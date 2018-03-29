@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 from django.conf import settings
+import workflows.urls
+
 
 from . import views
 
@@ -26,6 +28,7 @@ urlpatterns = [
     path('make-bid/<int:bid_id>/', views.make_bid),
     path('api/workflows/<int:bid_id>', views.api_get_bid),
     path('api/workflowcategory/', views.api_workflowcategory_list),
+
     path('api/workflow/', views.api_workflow_items),
     path('api/workflow/<int:workflow_id>/', views.api_workflow_item),
     path('api/workflow/save', views.api_workflow_save),
@@ -45,6 +48,7 @@ urlpatterns = [
     path('admin/raw-sql/', views.raw_sql),
     path('admin/', admin.site.urls),
     path(r'nested_admin/', include('nested_admin.urls')),
+    path('api/workflows/', include(workflows.urls)),
 ]
 
 
