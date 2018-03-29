@@ -13,6 +13,27 @@
     </v-layout>
     <v-layout row wrap v-if="!selectedItem">
         <v-flex xs12>
+      <v-dialog v-model="showCloneDialog" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Clone Workflow</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12 sm12 md12>
+                <v-text-field label="Enter new name" v-model="cloneItem.name"></v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="showCloneDialog = false">Cancel</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="clone">Copy</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
       <v-dialog v-model="dialog" max-width="500px">
       <v-btn color="primary" dark slot="activator" class="mb-2">New Item</v-btn>
       <v-card>
@@ -65,6 +86,9 @@
                 <td @click="onRowClick(props.item)">{{ props.item.name }}</td>
                 <td class="text-xs-right">{{ props.item.category_name }}</td>
                 <td class="justify-center layout px-0">
+                    <v-btn icon class="mx-0" @click="openCloneDialog(props.item)">
+                        <v-icon color="teal">content_copy</v-icon>
+                    </v-btn>
                     <v-btn icon class="mx-0" @click="editItem(props.item)">
                         <v-icon color="teal">edit</v-icon>
                     </v-btn>
@@ -113,7 +137,9 @@ export default {
         editedItem: {},
         selectedItem: null,
         workflow_categories_loading: true,
-        filter_workflow_category: null
+        filter_workflow_category: null,
+        showCloneDialog: false,
+        cloneItem: {}
     }
   },
   watch: {
@@ -124,6 +150,22 @@ export default {
   methods: {
     showList() {
         this.selectedItem = null;
+    },
+    openCloneDialog(item) {
+        this.cloneItem = _.cloneDeep(item);
+        this.showCloneDialog = true;
+    },
+    clone() {
+        const item = this.cloneItem;
+        const data = {
+            id: item.id,
+            name: item.name
+        }
+        this.$http.post('/workflow/clone', data)
+        .then(response => {
+            this.items.push(response.data);
+            this.showCloneDialog = false;
+        })
     },
     fetchWorkflowItems() {
         var params  = {};

@@ -280,6 +280,16 @@ def api_workflow_delete(request):
     return JsonResponse({'success': True})
 
 
+@csrf_exempt
+def api_workflow_clone(request):
+    data = json.loads(request.body)
+    workflow_id = data['id']
+    new_name = data['name']
+    w = Workflow.objects.get(id=workflow_id)
+    new_w = w.clone(name=new_name)
+    return JsonResponse(object_to_dict(new_w))
+
+
 def api_get_bid(request, bid_id):
     workflow = Workflow.objects.get(id=bid_id)
     workflow_data = {

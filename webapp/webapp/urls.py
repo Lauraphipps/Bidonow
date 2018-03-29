@@ -33,6 +33,7 @@ urlpatterns = [
     path('api/workflow/<int:workflow_id>/', views.api_workflow_item),
     path('api/workflow/save', views.api_workflow_save),
     path('api/workflow/delete', views.api_workflow_delete),
+    path('api/workflow/clone', views.api_workflow_clone),
 
     path('api/question-types/', views.api_question_types),
     path('api/question/<int:question_id>/', views.api_question_get),
