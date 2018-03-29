@@ -34,6 +34,7 @@
 <script>
 import WorkflowList from './workflow-list.vue'
 import QuestionTypeList from './question-type-list.vue'
+import WorkflowCategoryList from './workflow-category-list.vue'
 
 
 export default {
@@ -45,7 +46,8 @@ export default {
     return {
         tabs: [
             {'name': 'Workflows', component: WorkflowList},
-            {'name': 'Question Types', component: QuestionTypeList}
+            {'name': 'Question Types', component: QuestionTypeList},
+            {'name': 'Categories', component: WorkflowCategoryList}
         ],
         currentTab: null,
     }
