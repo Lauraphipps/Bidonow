@@ -4,7 +4,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
-from django_otp.decorators import otp_required
 
 
 @csrf_exempt
@@ -38,6 +37,5 @@ def logout_view(request):
     return JsonResponse({})
 
 
-@otp_required
 def secure_page(request):
     return HttpResponse('This is secure page requied 2FA')
