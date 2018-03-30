@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'nested_admin',
     'workflows.apps.WorkflowsConfig',
+    'bn_auth.apps.BnAuthConfig',
 ]
 
 MIDDLEWARE = [

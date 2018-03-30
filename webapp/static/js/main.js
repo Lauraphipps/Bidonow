@@ -1,26 +1,33 @@
 import _ from 'lodash';
-import Vue from 'vue';
-import modal from '../components/modal.vue';
+import '../sass/main.scss';
 
-import '../sass/main.scss'
+import 'materialize-css/dist/js/materialize.min.js';
 
-// document.body.appendChild(component());
 
-var app = new Vue({
-    el: '#app',
-    data: {
-        message: 'Hello Vue.js!',
-        showModal: false
-    },
-    components: {
-        modal: modal
-    },
-    methods: {
-        reverseMessage: function () {
-            this.message = this.message.split('').reverse().join('')
-        },
-        openSignUp: function () {
-            alert('Open signup');
-        }
-    }
+$(function () {
+    $('.btn-sign-up').click((e) => {
+        e.preventDefault();
+        $('#sign-up-modal').modal('open');
+    });
+    $('.btn-sign-up-submit').click((e) => {
+        e.preventDefault();
+        var data = {
+            email: $('.inp-email').val(),
+            password: $('.inp-password').val()
+        };
+        console.log(data);
+        $.ajax({
+            url: '/api/auth/signup/',
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+        })
+        .done((response) => {
+            console.log(response);
+            alert('success');
+        });
+    });
+    $('.modal').modal();
 });

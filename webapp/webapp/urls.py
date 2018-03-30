@@ -18,6 +18,7 @@ from django.urls import path, include
 
 from django.conf import settings
 import workflows.urls
+import bn_auth.urls
 
 
 from . import views
@@ -53,6 +54,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'nested_admin/', include('nested_admin.urls')),
     path('api/workflows/', include(workflows.urls)),
+    path('api/auth/', include(bn_auth.urls)),
 ]
 
 
