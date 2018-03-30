@@ -31,6 +31,6 @@
   },
   "scripts": {
     "watch-control-panel": "webpack --watch --progress --colors --mode=development --config webpack.control-panel.js",
-    "build": "webpack --mode=development"
+    "build": "webpack --mode=development --config webpack.build.js"
   }
 }

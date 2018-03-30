@@ -4,11 +4,10 @@
   <v-container fluid>
         <v-layout row wrap>
             <v-flex xs12>
-    <h3>Workflow {{ item.name }} ({{ item.id }})</h3>
-    <div v-if="item">
+    <div v-if="items">
           <v-data-table
             :headers="headers"
-            :items="item.questions"
+            :items="items"
             hide-actions
             item-key="id"
         >
@@ -66,7 +65,7 @@
                 </v-flex>
             </template>
         </v-data-table>
-        <question-edit :itemId="editedItemId" :default="{'bundle_id': item.id}" @on-save="onQuestionSaved"/>
+        <question-edit :itemId="editedItemId" :default="{'bundle_id': bundleId}" @on-save="onQuestionSaved"/>
         <answer-edit :itemId="editedAnswerId" :default="defaultAnswer" @on-save="onAnswerSaved"/>
     </div> <!-- item -->
     <div v-else>
@@ -87,41 +86,43 @@ import _ from 'lodash';
 export default {
   name: 'workflow-item-view',
   props: {
-    id: Number
+    bundleId: Number
   },
   components: {
     QuestionEdit, AnswerEdit
   },
   methods: {
     fetchWorkFlow() {
-        this.$http.get('workflow/' + this.id +'/')
+        this.$http.get('bundle/' + this.bundleId +'/questions/')
         .then(response => {
-            this.item = response.data.workflow
+            this.items = response.data.items;
         });
     },
     onQuestionSaved(updated_item) {
         if (this.editedItemId !== null) {
-            var idx = _.findIndex(this.item.questions, (o) => o.id == this.editedItemId);
-            var old_item = this.item.questions[idx];
+            var idx = _.findIndex(this.items, (o) => o.id == this.editedItemId);
+            var old_item = this.items[idx];
             var new_item = _.extend(old_item, updated_item);
             new_item.question_type = updated_item.question_type.name;
-            Object.assign(this.item.questions[idx], new_item);
+            Object.assign(this.items[idx], new_item);
         } else {
             updated_item.question_type = updated_item.question_type.name;
             updated_item.question_type_id = updated_item.question_type.id;
-            this.item.questions.push(updated_item)
+            console.log('Add new question', updated_item);
+            updated_item.answers = [];
+            this.items.push(updated_item)
         }
     },
     editQuestion(item) {
         this.editedItemId = item.id;
     },
     deleteQuestion(item) {
-        const index = this.item.questions.indexOf(item)
+        const index = this.items.indexOf(item)
         if (confirm('Are you sure you want to delete this item?')) {
             this.$http.post('/question/delete', {id: item.id})
             .then(response => {
                 alert('Deleted');
-                this.item.questions.splice(index, 1);
+                this.items.splice(index, 1);
             });
         };
     },
@@ -130,8 +131,8 @@ export default {
         this.editedAnswerId = item.id;
     },
     deleteAnswer(item) {
-        const questionIdx = _.findIndex(this.item.questions, (o) => o.id == item.question_id);
-        const answers = this.item.questions[questionIdx].answers;
+        const questionIdx = _.findIndex(this.items, (o) => o.id == item.question_id);
+        const answers = this.items[questionIdx].answers;
         const idx = answers.indexOf(item)
         if (confirm('Are you sure you want to delete this item?')) {
             this.$http.post('/answer/delete', {id: item.id})
@@ -146,8 +147,11 @@ export default {
         this.editedAnswerId = -1;
     },
     onAnswerSaved(item) {
-        const questionIdx = _.findIndex(this.item.questions, (o) => o.id == item.question_id);
-        const answers = this.item.questions[questionIdx].answers;
+        const questionIdx = _.findIndex(this.items, (o) => o.id == item.question_id);
+        console.log('questionIdx', questionIdx);
+        const answers = this.items[questionIdx].answers;
+        console.log('answers', answers);
+        console.log('question_id', item.question_id);
         if (this.editedAnswerId !== null && this.editedAnswerId !== -1) {
             const idx = _.findIndex(answers, (o) => o.id == item.id);
             var old_item = answers[idx];
@@ -170,6 +174,7 @@ export default {
             }
             answers.push(item)
         }
+        this.editedAnswerId = null;
     }
   },
   watch: {
@@ -182,7 +187,7 @@ export default {
   },
   data() {
     return {
-        item: {},
+        items: [],
         editedItemId: null,
         editedAnswerId: null,
         defaultAnswer: {},

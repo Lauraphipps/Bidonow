@@ -1,5 +1,6 @@
 <template>
-<v-container fluid grid-list-xl>
+<div>
+<v-container fluid grid-list-xl v-if="detailItem === null">
 <v-layout row wrap>
     <v-flex xs12>
         <h2>Question Types</h2>
@@ -16,7 +17,7 @@
     >
         <template slot="items" slot-scope="props">
         <tr>
-            <td @click="editedId = props.item.id">{{ props.item.name }}</td>
+            <td @click="detailItem = props.item">{{ props.item.name }}</td>
             <td class="justify-center layout px-0">
                 <v-btn icon class="mx-0" @click="editItem(props.item)">
                     <v-icon color="teal">edit</v-icon>
@@ -31,16 +32,31 @@
     </v-flex>
 </v-layout>
 </v-container>
+<v-container fluid grid-list-xl v-if="detailItem !== null">
+<v-layout row wrap>
+    <v-flex xs12>
+        <h2>Queston Type: {{ detailItem.name }}</h2>
+    </v-flex>
+</v-layout>
+<v-layout row wrap>
+    <v-flex xs12>
+        <workflow-item-view :bundleId="detailItem.id" @back="showList"/>
+    </v-flex>
+</v-layout>
+</v-container>
+</div>
 </template>
 <script>
 
 import _ from 'lodash';
 import QuestionTypeEdit from './question-type-edit.vue'
+import WorkflowItemView from './workflow-item-view.vue'
 
 export default {
   name: 'question-type',
   components: {
-    QuestionTypeEdit
+    QuestionTypeEdit,
+    WorkflowItemView
   },
   data() {
     return {
@@ -50,10 +66,16 @@ export default {
         ],
         items: [],
         apiUrl: '/workflows/question-type',
-        editedId: null
+        editedId: null,
+        detailItem: null
     }
   },
+  watch: {
+  },
   methods:  {
+    showList() {
+        this.detailItem = null;
+    },
     editItem(item) {
         var itemId = -1;
         if (!_.isNil(item)) {

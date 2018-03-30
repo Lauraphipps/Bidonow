@@ -228,6 +228,25 @@ def api_question_delete(request):
     return JsonResponse({})
 
 
+def api_bundel_questions(request, bundle_id):
+    items = models.Question.objects.filter(bundle_id=bundle_id)
+    data = {
+        'items': objects_to_list(
+            items,
+            extra={
+                'answers': lambda q: objects_to_list(
+                    q.answer_set.all(),
+                    extra={
+                        'answer_type': lambda a: a.answer_type.name if a.answer_type else None
+                    }
+                ),
+                'question_type': lambda q: q.question_type.name
+            }
+        )
+    }
+    return JsonResponse(data)
+
+
 def api_workflow_item(request, workflow_id):
     w = models.Workflow.objects.get(id=workflow_id)
     item = {

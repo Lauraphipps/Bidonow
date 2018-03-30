@@ -103,8 +103,8 @@
     </v-layout>
     <v-layout row wrap v-if="selectedItem">
         <v-flex xs12 sm12 md12>
-            <h2> Workflow Detaild {{ selectedItem.id }} </h2>
-            <workflow-item-view :id="selectedItem.id" @back="showList"/>
+            <h2>Workflow {{ selectedItem.name }} ({{ selectedItem.id }})</h2>
+            <workflow-item-view :bundleId="selectedItem.id" @back="showList"/>
         </v-flex>
     </v-layout>
   </div>

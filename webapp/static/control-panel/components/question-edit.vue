@@ -85,7 +85,6 @@ export default {
         });
     },
     newItem() {
-        alert('New Item');
         this.item = _.cloneDeep(this.default);
     }
   },

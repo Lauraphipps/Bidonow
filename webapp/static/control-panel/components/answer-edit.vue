@@ -43,6 +43,12 @@ export default {
   },
   methods: {
     fetchItem() {
+        if (this.itemId === null) {
+            this.showDialog = false;
+            return;
+        } else {
+            this.showDialog = true;
+        }
         if (this.itemId === null || this.itemId === -1) return;
         this.$http.get('answer/' + this.itemId +'/')
         .then(response => {
