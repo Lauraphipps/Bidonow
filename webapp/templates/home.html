@@ -16,7 +16,6 @@
 
     <body>
         <div id="app">
-        {% verbatim %}
         <nav role="navigation">
             <div class="nav-wrapper">
                 <div class="row">
@@ -33,6 +32,37 @@
                     </div>
                     <div class="col s2">
                         <ul>
+                            <li>
+                                {% if request.user.is_authenticated %}
+                                        {{ request.user.username }}
+                                        <button class="btn btn-logout">Logout</button>
+                                {% else %}
+                                <a href="/login" class="btn btn-login">Login up</a>
+                                  <div class="modal modal-fixed-footer login-modal">
+                                        <div class="modal-content">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col s12 center-align">
+                                                        Login
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col s12 center-align">
+                                                        <form>
+                                                            <input type="text" placeholder="Email" class="login-inp-email"/>
+                                                            <input type="password" placeholder="Password" class="login-inp-password"/>
+                                                            <span class="login-error" style="display: none;">
+                                                                User name or password are wrong!!!
+                                                            </span>
+                                                            <button type="submit" class="btn btn-login-submit">Login</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                  </div>
+                                  {% endif %}
+                            </li>
                             <li>
                                 <a href="/signup" class="btn btn-sign-up">Sign up</a>
                                   <div id="sign-up-modal" class="modal modal-fixed-footer sign-up-modal">
@@ -83,7 +113,6 @@
                                     </div>
                                 </div>
                             </li>
-
                         </ul>
                     </div>
             </div>
@@ -107,8 +136,6 @@
             </div>
             </div>
         </div>
-
-        {% endverbatim %}
         </div>
 
         <script type="text/javascript" src="{% static "main.js" %}"></script>

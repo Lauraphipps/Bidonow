@@ -20,7 +20,6 @@ from django.conf import settings
 import workflows.urls
 import bn_auth.urls
 
-
 from . import views
 
 urlpatterns = [

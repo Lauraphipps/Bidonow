@@ -85,8 +85,9 @@ ALTER USER bidonow CREATEDB;
 For Widnows:
 
 ```
+cd <PROJECT_ROOT>\backups
 # Backup
-pg_dump dbname > ..\..\backups\bidonow_20180324.bak
+pg_dump -U postgres bidonow > bidonow_20180330.sql
 # restore DB
 psql -U postgres -f create_bidonow.sql
 Get-Content bidonow_20180324.bak | psql -U postgres bidonow
