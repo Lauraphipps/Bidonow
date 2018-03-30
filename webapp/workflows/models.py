@@ -22,6 +22,18 @@ class Workflow(QuestionBundle):
     def __str__(self):
         return self.name
 
+    def clone(self, **kwargs):
+        fields = ('name', 'description', 'image', 'category')
+        nw = Workflow()
+        for f in fields:
+            setattr(nw, f, getattr(self, f))
+        for name, value in kwargs.items():
+            setattr(nw, name, value)
+        nw.save()
+        for q in self.question_set.all():
+            nq = q.clone(bundle=nw)
+        return nw
+
 
 class QuestionType(QuestionBundle):
     # is_bundle = models.BooleanField(null=False, blank=False, default=False)
@@ -48,6 +60,20 @@ class Question(models.Model):
     def __str__(self):
         return self.text
 
+    def clone(self, **kwargs):
+        fields = ('question_type', 'text', 'bundle', 'image', 'order', 'optional', 'more_info')
+        new_obj = Question()
+        for f in fields:
+            setattr(new_obj, f, getattr(self, f))
+        for name, value in kwargs.items():
+            setattr(new_obj, name, value)
+        new_obj.save()
+
+        for ans in self.answer_set.all():
+            ans.clone(question=new_obj)
+
+        return new_obj
+
 
 class AnswerType(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False, unique=True)
@@ -70,3 +96,13 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text
+
+    def clone(self, **kwargs):
+        fields = ('question', 'answer_type', 'text', 'next_question', 'image', 'order')
+        new_obj = Answer()
+        for f in fields:
+            setattr(new_obj, f, getattr(self, f))
+        for name, value in kwargs.items():
+            setattr(new_obj, name, value)
+        new_obj.save()
+        return new_obj

@@ -6,10 +6,6 @@ module.exports = {
     // bug: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/23
     // disabling cache in watch mode
     cache: false,
-    entry: {
-        "main": path.resolve(__dirname, 'static', 'js', 'main.js'),
-        "make-bid": path.resolve(__dirname, 'static', 'js', 'make-bid.js'),
-    },
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'static', 'dist')
