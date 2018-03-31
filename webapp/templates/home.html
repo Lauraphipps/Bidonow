@@ -6,7 +6,7 @@
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="{% static "main.css" %}"  media="screen,projection"/>
 
@@ -37,7 +37,7 @@
                                         {{ request.user.username }}
                                         <button class="btn btn-logout">Logout</button>
                                 {% else %}
-                                <a href="/login" class="btn btn-login">Login up</a>
+                                <a href="/login" class="btn btn-login">Become a Pro</a>
                                   <div class="modal modal-fixed-footer login-modal">
                                         <div class="modal-content">
                                             <div class="container">
@@ -64,7 +64,7 @@
                                   {% endif %}
                             </li>
                             <li>
-                                <a href="/signup" class="btn btn-sign-up">Sign up</a>
+                                <a href="/signup" class="btn btn-sign-up">Free Sign up</a>
                                   <div id="sign-up-modal" class="modal modal-fixed-footer sign-up-modal">
                                     <div class="modal-content">
                                         <div class="container">
@@ -84,7 +84,7 @@
                                                     <ul>
                                                         <li>
                                                             <button class="btn btn-facebook left-align">
-                                                                <i class="zmdi zmdi-facebook-box left"></i> Sign-up with Facebook
+                                                                <i class="zmdi zmdi-facebook-box left">Sign-up with Facebook</i>
                                                             </button>
                                                         </li>
                                                     </ul>
@@ -109,7 +109,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
                                     </div>
                                 </div>
                             </li>

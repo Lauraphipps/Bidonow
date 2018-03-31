@@ -50,16 +50,19 @@ nav {
     color: #ffffff;
   }
 }
+.btn-sign-up {
+    background-color: red;
+}
 
 .sign-up-modal {
     width: 1186px;
     height: 1006px;
-    background-color: #252422;
+    background-color: green;
     border: solid 1px #666666;
     .modal-content {
         width: 1186px;
         height: 1006px;
-        background-color: #252422;
+        background-color: green;
         border: solid 1px #666666;
     }
     .lbl-hello {
@@ -100,4 +103,3 @@ nav {
         border: solid 1px rgba(255, 255, 255, 0.3);
     }
 }
-
