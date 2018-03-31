@@ -22,7 +22,7 @@
             <div class="nav-wrapper">
                 <div class="row">
                     <div class="menu-section">
-                        <a href="#" class="brand-logo">
+                        <a href="#" class="brand-logo valign-wrapper">
                             <i class="bull-eye-logo"></i>
                             Bidonow
                         </a>
@@ -30,36 +30,47 @@
                     <div class="menu-section">
                         <ul class="menu">
                             <li><a href="#">Services</a></li>
-                            <li><a href="#"><i class="bull-eye-icon"></i>Deals</a></li>
+                            <li><a href="#" class="valign-wrapper"><i class="bull-eye-icon"></i>Deals</a></li>
                             <li><a href="#">Work Reviews</a></li>
                             <li><a href="#">Work Professionals</a></li>
                         </ul>
                     </div>
                     <div class="menu-section">
                         <ul class="account-menu">
+                            {% if not request.user.is_authenticated %}
                             <li>
                                 <div><a href="#" class="nav-top">Looking for local service</a></div>
                                 <a href="/signup" class="btn btn-sign-up">Free Sign up</a>
-                                  <div id="sign-up-modal" class="modal modal-fixed-footer sign-up-modal">
+                                  <div id="sign-up-popup" class="modal modal-fixed-footer sign-up-modal">
                                     <div class="modal-content">
-                                        <div class="container">
                                             <div class="row">
                                                 <div class="col s12 center-align">
-                                                    <span class="lbl-hello">Hello</span>
+                                                    <div class="lbl-hello">Hello</div>
+                                                    <div class="lbl-create-a-new-cccount">Create New Account</div>
+                                                    <div class="divider"></div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col s12 center-align">
-                                                    <span class="lbl-create-a-new-cccount">Create New Account</span>
-                                                </div>
-                                            </div>
-                                            <div class="divider"></div>
-                                            <div class="row">
-                                                <div class="col s6 center-align">
+                                                <div class="col s6 social-buttons">
                                                     <ul>
                                                         <li>
-                                                            <button class="btn btn-facebook left-align">
-                                                                <i class="zmdi zmdi-facebook-box left">Sign-up with Facebook</i>
+                                                            <button class="btn btn-facebook left-align valign-wrapper">
+                                                                <i class="zmdi zmdi-facebook-box"></i>Sign-up with Facebook
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button class="btn btn-twitter left-align valign-wrapper">
+                                                                <i class="zmdi zmdi-twitter-box"></i>Sign-up with Twitter
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button class="btn btn-google left-align valign-wrapper">
+                                                                <i class="zmdi zmdi-google-plus-box"></i>Sign-up with Google +
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button class="btn btn-linkedin left-align valign-wrapper">
+                                                                <i class="zmdi zmdi-linkedin-box"></i>Sign-up with LinkedIn
                                                             </button>
                                                         </li>
                                                     </ul>
@@ -68,7 +79,7 @@
                                                     <div class="row">
                                                         <span class="lbl-sign-up-with-email">Sign-up with Email</span>
                                                     </div>
-                                                    <form>
+                                                    <form class="login-form">
                                                         <div class="row">
                                                             <input type="text" placeholder="Email" class="inp-email"/>
                                                         </div>
@@ -81,13 +92,10 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
                                     </div>
                                 </div>
                             </li>
+                            {% endif %}
                             <li>
                                 {% if request.user.is_authenticated %}
                                         {{ request.user.username }}
@@ -95,34 +103,66 @@
                                 {% else %}
                                 <div><a href="#" class="nav-top center-align">Are you professional?</a></div>
                                 <a href="/login" class="btn-blue">Become a Pro</a>
-                                  <div class="modal modal-fixed-footer login-modal">
+                                  <div class="modal modal-fixed-footer login-modal sign-up-modal" id="login-popup">
                                         <div class="modal-content">
-                                            <div class="container">
                                                 <div class="row">
                                                     <div class="col s12 center-align">
-                                                        Login
+                                                        <div class="lbl-hello">Welcome Back!</div>
+                                                        <div class="lbl-create-a-new-cccount">Please login.</div>
+                                                        <div class="divider"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col s12 center-align">
-                                                        <form>
+                                                    <div class="col s6 social-buttons">
+                                                        <ul>
+                                                            <li>
+                                                                <button class="btn btn-facebook left-align valign-wrapper">
+                                                                    <i class="zmdi zmdi-facebook-box"></i>Sign-up with Facebook
+                                                                </button>
+                                                            </li>
+                                                            <li>
+                                                                <button class="btn btn-twitter left-align valign-wrapper">
+                                                                    <i class="zmdi zmdi-twitter-box"></i>Sign-up with Twitter
+                                                                </button>
+                                                            </li>
+                                                            <li>
+                                                                <button class="btn btn-google left-align valign-wrapper">
+                                                                    <i class="zmdi zmdi-google-plus-box"></i>Sign-up with Google +
+                                                                </button>
+                                                            </li>
+                                                            <li>
+                                                                <button class="btn btn-linkedin left-align valign-wrapper">
+                                                                    <i class="zmdi zmdi-linkedin-box"></i>Sign-up with LinkedIn
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col s6 center-align">
+                                                    <form class="login-form">
+                                                        <div class="row">
                                                             <input type="text" placeholder="Email" class="login-inp-email"/>
+                                                        </div>
+                                                        <div class="row">
                                                             <input type="password" placeholder="Password" class="login-inp-password"/>
+                                                        </div>
+                                                        <div class="row">
                                                             <span class="login-error" style="display: none;">
                                                                 User name or password are wrong!!!
                                                             </span>
                                                             <button type="submit" class="btn btn-login-submit">Login</button>
-                                                        </form>
+                                                        </div>
+                                                    </form>
                                                     </div>
                                                 </div>
-                                            </div>
                                         </div>
                                   </div>
                                   {% endif %}
                             </li>
-                            <li>
-                                <a href="#" class="btn-login">Log in</a>
-                            </li>
+                            {% if not request.user.is_authenticated %}
+                                <li>
+                                    <a href="#" class="btn-login">Log in</a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </div>
             </div>
