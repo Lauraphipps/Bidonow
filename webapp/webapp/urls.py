@@ -54,6 +54,8 @@ urlpatterns = [
     path(r'nested_admin/', include('nested_admin.urls')),
     path('api/workflows/', include(workflows.urls)),
     path('api/auth/', include(bn_auth.urls)),
+
+    path('accounts/', include('allauth.urls')),
 ]
 
 
