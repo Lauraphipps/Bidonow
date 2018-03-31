@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -12,7 +13,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.esm.js' // 'vue/dist/vue.common.js' for webpack 1
+            'vue$': 'vue/dist/vue.esm.js', // 'vue/dist/vue.common.js' for webpack 1
+            'jquery': path.resolve('node_modules/jquery/dist/jquery')
         }
     },
     module: {
@@ -52,6 +54,12 @@ module.exports = {
         // both options are optional
         filename: "[name].css",
         chunkFilename: "[id]"
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.$': 'jquery',
+            'window.jQuery': 'jquery',
         })
     ]    
 };
