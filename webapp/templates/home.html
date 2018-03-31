@@ -7,6 +7,8 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="{% static "main.css" %}"  media="screen,projection"/>
 
@@ -19,51 +21,24 @@
         <nav role="navigation">
             <div class="nav-wrapper">
                 <div class="row">
-                    <div class="col s2">
-                        <a href="#" class="brand-logo">Bidonow</a>
+                    <div class="menu-section">
+                        <a href="#" class="brand-logo">
+                            <i class="bull-eye-logo"></i>
+                            Bidonow
+                        </a>
                     </div>
-                    <div class="col s8">
+                    <div class="menu-section">
                         <ul class="menu">
                             <li><a href="#">Services</a></li>
-                            <li><a href="#">Deals</a></li>
+                            <li><a href="#"><i class="bull-eye-icon"></i>Deals</a></li>
                             <li><a href="#">Work Reviews</a></li>
                             <li><a href="#">Work Professionals</a></li>
                         </ul>
                     </div>
-                    <div class="col s2">
-                        <ul>
+                    <div class="menu-section">
+                        <ul class="account-menu">
                             <li>
-                                {% if request.user.is_authenticated %}
-                                        {{ request.user.username }}
-                                        <button class="btn btn-logout">Logout</button>
-                                {% else %}
-                                <a href="/login" class="btn btn-login">Become a Pro</a>
-                                  <div class="modal modal-fixed-footer login-modal">
-                                        <div class="modal-content">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col s12 center-align">
-                                                        Login
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col s12 center-align">
-                                                        <form>
-                                                            <input type="text" placeholder="Email" class="login-inp-email"/>
-                                                            <input type="password" placeholder="Password" class="login-inp-password"/>
-                                                            <span class="login-error" style="display: none;">
-                                                                User name or password are wrong!!!
-                                                            </span>
-                                                            <button type="submit" class="btn btn-login-submit">Login</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                  </div>
-                                  {% endif %}
-                            </li>
-                            <li>
+                                <div><a href="#" class="nav-top">Looking for local service</a></div>
                                 <a href="/signup" class="btn btn-sign-up">Free Sign up</a>
                                   <div id="sign-up-modal" class="modal modal-fixed-footer sign-up-modal">
                                     <div class="modal-content">
@@ -113,6 +88,41 @@
                                     </div>
                                 </div>
                             </li>
+                            <li>
+                                {% if request.user.is_authenticated %}
+                                        {{ request.user.username }}
+                                        <button class="btn-blue btn-logout">Logout</button>
+                                {% else %}
+                                <div><a href="#" class="nav-top center-align">Are you professional?</a></div>
+                                <a href="/login" class="btn-blue">Become a Pro</a>
+                                  <div class="modal modal-fixed-footer login-modal">
+                                        <div class="modal-content">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col s12 center-align">
+                                                        Login
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col s12 center-align">
+                                                        <form>
+                                                            <input type="text" placeholder="Email" class="login-inp-email"/>
+                                                            <input type="password" placeholder="Password" class="login-inp-password"/>
+                                                            <span class="login-error" style="display: none;">
+                                                                User name or password are wrong!!!
+                                                            </span>
+                                                            <button type="submit" class="btn btn-login-submit">Login</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                  </div>
+                                  {% endif %}
+                            </li>
+                            <li>
+                                <a href="#" class="btn-login">Log in</a>
+                            </li>
                         </ul>
                     </div>
             </div>
@@ -120,23 +130,6 @@
         <!-- Navbar goes here -->
 
         <!-- Page Layout here -->
-          <button id="show-modal" @click="showModal = true">Show Modal</button>
-          <modal v-if="showModal" @close="showModal = false">
-            <!--
-            you can use custom content here to overwrite
-            default content
-            -->
-            <h3 slot="header">custom header</h3>
-           </modal>
-        <div class="row">
-            <div class="col s12">
-            <div>
-                <p>{{ message }}</p>
-                <button v-on:click="reverseMessage" class="btn">Reverse Message</button>
-            </div>
-            </div>
-        </div>
-        </div>
 
         <script type="text/javascript" src="{% static "main.js" %}"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

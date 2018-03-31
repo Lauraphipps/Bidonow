@@ -34,6 +34,13 @@ module.exports = {
                 }
             },
             {
+                test: /\.(svg)$/,
+                loader: "file-loader",
+                options: {
+                    name: "img/[name].[ext]",
+                }
+            },
+            {
                 test: /\.vue$/,
                 loader: 'vue-loader'
             }
