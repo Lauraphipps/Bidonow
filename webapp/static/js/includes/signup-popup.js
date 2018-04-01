@@ -1,8 +1,9 @@
 import 'materialize-css/dist/js/materialize.min.js';
-import '../../sass/includes/signup-popup.scss';
+import '../../sass/includes/auth-popups.scss';
 
 
 $(function () {
+$('.signup-popup').each(function (el) {
     $('.btn-sign-up').click((e) => {
         e.preventDefault();
         $('#sign-up-popup').modal('open');
@@ -29,4 +30,5 @@ $(function () {
             $('.login-modal').modal('open');
         });
     });
-})
+});
+});
