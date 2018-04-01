@@ -1,0 +1,87 @@
+.social-buttons {
+    border-right: solid 1px #666666; 
+    ul li {
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+}
+
+.btn-login {
+    margin-top: 25px;
+    display: block;
+}
+
+.login-form {
+    input {
+        padding: 10px;
+        background-color: #000000;
+        border: solid 1px rgba(255, 255, 255, 0.5);
+        font-family: Helvetica;
+        font-size: 18px;
+        color: white;
+        margin-top: 20px;
+    }
+}
+
+.sign-up-modal {
+    background-color: #252422;
+    border: solid 1px #666666;
+    .modal-content {
+    }
+    .lbl-hello {
+        font-family: 'Roboto Slab';
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        color: #f48b0b;
+    };
+    .lbl-create-a-new-cccount {
+        font-family: Helvetica;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        color: #cccccc;
+    }
+    .btn-facebook {
+        font-family: Helvetica;
+        background-color: #3b5998;
+        color: #ffffff;
+        width: 200px;
+        padding-left: 10px;
+        height: 50px;
+    }
+    .btn-twitter {
+        font-family: Helvetica;
+        background-color: #0084b4;
+        color: #ffffff;
+        width: 200px;
+        padding-left: 10px;
+        height: 50px;
+    }
+    .btn-google {
+        font-family: Helvetica;
+        background-color: #d34836;
+        color: #ffffff;
+        width: 200px;
+        padding-left: 10px;
+        height: 50px;
+    }
+    .btn-linkedin {
+        font-family: Helvetica;
+        background-color: #0077b5;
+        color: #ffffff;
+        width: 200px;
+        padding-left: 10px;
+        height: 50px;
+    }
+    .btn-sign-up-submit {
+        color: white;
+        font-weight: bold;
+        border: solid 1px rgba(255, 255, 255, 0.3);
+        background-color: #0093b2;
+        background-image: url("../img/bull-eye.svg");
+        background-size: 50px 50px;
+        background-position: right -25px top -25px;
+        background-repeat: no-repeat;
+    }
+}
