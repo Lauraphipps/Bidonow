@@ -1,5 +1,10 @@
 django==2.0.*
 psycopg2==2.7.*
 Pillow==5.0.*
+django-allauth==0.35.*
 
 django-nested-admin==3.0.*
+
+django-extensions==2.0.*
+Werkzeug==0.14.*
+pyOpenSSL==17.5.*

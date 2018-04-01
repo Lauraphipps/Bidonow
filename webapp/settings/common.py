@@ -27,9 +27,13 @@ DEBUG = True
 
 USE_X_FORWARDED_HOST = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '73.179.34.39', 'stage.bitonow.me', '10.0.0.180', 'stage.bidonow.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '73.179.34.39', '10.0.0.180', 'stage.bidonow.com']
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
+LOGIN_REDIRECT_URL = '/'
+
+SITE_ID = 1
 
 # Application definition
 
@@ -40,9 +44,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
     'nested_admin',
+    'django_extensions',
     'workflows.apps.WorkflowsConfig',
     'bn_auth.apps.BnAuthConfig',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.linkedin',
+    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
@@ -98,6 +111,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+AUTHENTICATION_BACKENDS = (
+    # 'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 
 # Internationalization

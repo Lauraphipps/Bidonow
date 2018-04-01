@@ -62,6 +62,13 @@ npm run build
 ```
 
 
+#### Run local SSL server
+
+```
+python manage.py  runserver_plus --cert-file ..\tmp\cert.crt
+```
+
+
 #### Compile sass
 
 TODO Find way how to use webpack to build sass
