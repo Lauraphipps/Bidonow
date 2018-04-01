@@ -10,7 +10,7 @@
     "axios": "^0.18.0",
     "css-loader": "^0.28.10",
     "file-loader": "^1.1.11",
-    "ladash": "^1.2.0",
+    "jquery": "^3.3.1",
     "materialize-css": "^0.100.2",
     "mini-css-extract-plugin": "^0.2.0",
     "node-sass": "^4.7.2",

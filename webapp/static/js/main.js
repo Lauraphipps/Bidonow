@@ -7,11 +7,11 @@ import 'materialize-css/dist/js/materialize.min.js';
 $(function () {
     $('.btn-sign-up').click((e) => {
         e.preventDefault();
-        $('.sign-up-modal').modal('open');
+        $('#sign-up-popup').modal('open');
     });
     $('.btn-login').click((e) => {
         e.preventDefault();
-        $('.login-modal').modal('open');
+        $('#login-popup').modal('open');
     });
     $('.btn-sign-up-submit').click((e) => {
         e.preventDefault();
