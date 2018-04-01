@@ -3,6 +3,8 @@
 # IDE settings
 .exrc/
 
+tmp/
+
 # secret keys (ex.: passwords, secret keys, etc.)
 secretkeys.json
 

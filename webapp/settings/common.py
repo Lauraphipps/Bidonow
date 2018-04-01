@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'nested_admin',
+    'django_extensions',
     'workflows.apps.WorkflowsConfig',
     'bn_auth.apps.BnAuthConfig',
 
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.linkedin',
+    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
