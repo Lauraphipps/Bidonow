@@ -40,7 +40,6 @@
                             {% if not request.user.is_authenticated %}
                             <li>
                                 <div><a href="#" class="nav-top">Looking for local service</a></div>
-                                <a href="/signup" class="btn btn-sign-up">Free Sign up</a>
                                 {% include "includes/signup-popup.html" %}
                             </li>
                             {% endif %}

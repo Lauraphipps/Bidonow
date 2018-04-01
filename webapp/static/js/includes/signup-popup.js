@@ -3,6 +3,10 @@ import '../../sass/includes/signup-popup.scss';
 
 
 $(function () {
+    $('.btn-sign-up').click((e) => {
+        e.preventDefault();
+        $('#sign-up-popup').modal('open');
+    });
     $('.btn-sign-up-submit').click((e) => {
         e.preventDefault();
         var data = {

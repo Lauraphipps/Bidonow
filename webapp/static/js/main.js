@@ -8,10 +8,6 @@ import './includes/signup-popup.js';
 
 
 $(function () {
-    $('.btn-sign-up').click((e) => {
-        e.preventDefault();
-        $('#sign-up-popup').modal('open');
-    });
     $('.btn-login').click((e) => {
         e.preventDefault();
         $('#login-popup').modal('open');
