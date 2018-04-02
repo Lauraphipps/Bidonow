@@ -32,26 +32,43 @@
                             <li><a href="#">Services</a></li>
                             <li><a href="#" class="valign-wrapper"><i class="bull-eye-icon"></i>Deals</a></li>
                             <li><a href="#">Work Reviews</a></li>
-                            <li><a href="#">Work Professionals</a></li>
+                            <li><a href="#">Professionals</a></li>
                         </ul>
                     </div>
                     <div class="menu-section">
-                        <ul class="account-menu">
+                        <ul class="account-menu valign-wrapper">
                             {% if not request.user.is_authenticated %}
                             <li>
                                 <div><a href="#" class="nav-top">Looking for local service</a></div>
                                 {% include "includes/signup-popup.html" %}
                             </li>
                             {% endif %}
-                            <li>
-                                {% if request.user.is_authenticated %}
-                                        {{ request.user.username }}
-                                        <button class="btn-blue btn-logout">Logout</button>
-                                {% else %}
-                                <div><a href="#" class="nav-top center-align">Are you professional?</a></div>
-                                    <a href="/login" class="btn-blue">Become a Pro</a>
-                                  {% endif %}
+                            {% if request.user.is_authenticated %}
+                            <li class="search-box">
+                                <i class="material-icons search-icon">search</i>
+                                <input type="text" name="nav-search" class="inp-nav-search" placeholder="Search..."/>
                             </li>
+                            {% endif %}
+                            <li>
+                                <div><a href="#" class="nav-top center-align">Are you professional?</a></div>
+                                <a href="/login" class="btn-blue">Become a Pro</a>
+                            </li>
+                            {% if request.user.is_authenticated %}
+                            <li>
+                                <a href="/chat"><i class="chat-icon"></i></a>
+                            </li>
+                            <li>
+                                <a href="/notifications" >
+                                    <i class="bell-icon"></i>
+                                    <div class="notifications-count">
+                                        <div>3</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <div class="nav-profile-thumbnail" class="btn-logout">Image</div>
+                            </li>
+                            {% endif %}
                             {% if not request.user.is_authenticated %}
                                 <li>{% include "includes/login-popup.html" %}</li>
                             {% endif %}

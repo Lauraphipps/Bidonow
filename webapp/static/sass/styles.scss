@@ -17,14 +17,15 @@ nav {
         font-family: 'Bree Serif';
         color: #555555;
         font-size: 42px;
-        width: 250px;
+        width: 200px;
     }
     ul.menu {
-        margin-right: 40px;
+        margin-right: 10px;
+        margin-left: 10px;
     }
     ul.menu li {
         float: left;
-        border-right: 1px solid #000;
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
         height: 30px;
         margin-top: 10px;
         font-family: 'Roboto Slab';
@@ -66,17 +67,21 @@ nav {
     @extend .btn;
     background-image: linear-gradient(#186acf, #186acf), linear-gradient(57deg, #000000, #ffffff);
 }
-
-ul.account-menu li {
-    float: left;
-    margin-right: 10px;
-    margin-top: -10px;
+ul.account-menu {
+    margin-top: 20px;
+    li {
+        float: left;
+        margin-right: 10px;
+        margin-top: -10px;
+        position: relative;
+    }
 }
 
 a.nav-top {
     font-size: 14px;
     width: 100%;
     display: block;
+    margin-top: -20px;
 }
 
 
@@ -87,11 +92,31 @@ i {
 
 .bull-eye-icon {
     display: inline-block;
-    background-image: url("../img/bull-eye.svg");
+    background-image: url("../img/bull-eye-simple.svg");
     background-size: 20px 20px;
     background-repeat: no-repeat;
     width: 20px;
     height: 20px;
+    margin-right: 2px;
+}
+
+.chat-icon {
+    display: inline-block;
+    background-image: url("../img/chat-icon.svg");
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+}
+
+.bell-icon {
+    display: inline-block;
+    background-image: url("../img/bell-icon.svg");
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+
 }
 
 .bull-eye-logo {
@@ -100,8 +125,64 @@ i {
     background-repeat: no-repeat;
     width: 50px;
     height: 50px;
-    background-size: 50px 50px;
+    background-size: 35px 35px;
     background-position: center;
+}
+
+.notifications-count {
+    position: absolute;
+    top: -4px;
+    left: 22px;
+    color: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid red;
+    background-color: red;
+    div {
+        margin-top: -3px;
+        margin-left: 5px;
+        color: white;
+    }
+}
+
+
+.search-box {
+    position: relative;
+    i {
+        position: absolute;
+        top: 8px;
+        left: 3px;
+        z-index: 1000;
+    }
+}
+
+.inp-nav-search {
+    width: 200px;
+    height: 40px;
+    position: relative;
+    padding-left: 25px;
+    border: solid 1px #0093b2;
+}
+
+.inp-nav-search::after {
+  position: absolute;
+  font-family: 'Material Icons';
+  top: 0;
+  left: 10px;
+  content: "search";
+}
+
+.nav-profile-thumbnail {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid red;
+    font-size: 10px;
+    padding-left: 7px;
+    padding-top: 10px;
+    margin-top: -3px;
+    
 }
 
 .menu-section {
