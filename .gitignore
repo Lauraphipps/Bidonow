@@ -3,6 +3,9 @@
 # IDE settings
 .exrc/
 
+nginx/certs/
+
+
 tmp/
 
 # secret keys (ex.: passwords, secret keys, etc.)
