@@ -54,19 +54,22 @@
                                 <a href="/login" class="btn-blue">Become a Pro</a>
                             </li>
                             {% if request.user.is_authenticated %}
-                            <li>
+                            <li style="padding-top: 5px">
                                 <a href="/chat"><i class="chat-icon"></i></a>
                             </li>
-                            <li>
-                                <a href="/notifications" >
+                            <li style="padding-top: 5px">
+                                <a href="/notifications">
                                     <i class="bell-icon"></i>
                                     <div class="notifications-count">
                                         <div>3</div>
                                     </div>
                                 </a>
                             </li>
-                            <li>
-                                <div class="nav-profile-thumbnail" class="btn-logout">Image</div>
+                            <li style="padding-top: 5px">
+                                <div class="nav-profile-thumbnail" class="btn-logout">
+                                    Image
+                                    <i class="btn-user-menu material-icons">arrow_drop_down</i>
+                                </div>
                             </li>
                             {% endif %}
                             {% if not request.user.is_authenticated %}

@@ -12,6 +12,7 @@
 nav {
     height: 150px;
     background-color: #ffffff;
+    margin-top: 10px;
 
     .brand-logo {
         font-family: 'Bree Serif';
@@ -177,13 +178,21 @@ i {
     width: 40px;
     height: 40px;
     border-radius: 20px;
-    border: 1px solid red;
+    border: 1px solid #0093b2;
     font-size: 10px;
     padding-left: 7px;
     padding-top: 10px;
     margin-top: -3px;
+    .btn-user-menu {
+        position: absolute;
+        top: 27px;
+        left: 29px;
+        color: #186acf;
+
+    }
     
 }
+
 
 .menu-section {
     display: inline-block;
