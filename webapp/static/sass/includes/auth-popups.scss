@@ -26,37 +26,25 @@
             margin-top: 20px;
             margin-left: 30px;
         }
-        .btn-facebook {
+        .btn {
             font-family: Helvetica;
-            background-color: #3b5998;
             color: #ffffff;
             width: 200px;
             padding-left: 10px;
             height: 50px;
+            line-height: 50px;
+        }
+        .btn-facebook {
+            background-color: #3b5998;
         }
         .btn-twitter {
-            font-family: Helvetica;
             background-color: #0084b4;
-            color: #ffffff;
-            width: 200px;
-            padding-left: 10px;
-            height: 50px;
         }
         .btn-google {
-            font-family: Helvetica;
             background-color: #d34836;
-            color: #ffffff;
-            width: 200px;
-            padding-left: 10px;
-            height: 50px;
         }
         .btn-linkedin {
-            font-family: Helvetica;
             background-color: #0077b5;
-            color: #ffffff;
-            width: 200px;
-            padding-left: 10px;
-            height: 50px;
         }
     }
     .popup-modal {
